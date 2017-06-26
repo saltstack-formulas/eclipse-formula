@@ -59,6 +59,7 @@ eclipse-extend-with-plugins-config-script:
     - name: {{ eclipse.workspace }}/config.sh
     - source: salt://eclipse-java/files/config.sh
     - template: jinja
+    - makedirs: True
     - mode: 744
     - user: {{ eclipse.eclipse_user }}
     - group: {{ eclipse.eclipse_user }}
