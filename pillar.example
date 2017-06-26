@@ -1,0 +1,15 @@
+eclipse_home: /opt/eclipse
+eclipse-java:
+  relname: neon
+  package: java
+  release: 3
+  source_url: http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/neon/eclipse-java-neon-3-linux-gtk-x86_64.tar.gz
+  source_hash: http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/neon/eclipse-java-neon-3-linux-gtk-x86_64.tar.gz.sha512
+  eclipse_symlink: /usr/bin/eclipse
+  eclipse_realcmd: /opt/eclipse/eclipse
+  eclipse_real_home: /usr/share/java/eclipse-java-neon-3
+  archive_type: tar
+  dl_opts: 
+  unpack_opts: z
+  prefix: /opt
+
