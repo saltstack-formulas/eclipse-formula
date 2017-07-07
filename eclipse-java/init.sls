@@ -17,7 +17,6 @@ eclipse-java-install-dir:
 eclipse-java-download-archive:
   cmd.run:
     - name: curl {{ eclipse.dl_opts }} -o '{{ archive_file }}' '{{ eclipse.source_url }}'
-    - unless: test -f '{{ archive_file }}'
     - require:
       - eclipse-java-install-dir
     - require_in:

@@ -55,7 +55,7 @@ features=$features,org.eclipse.draw2d.feature.group,org.eclipse.draw2d.sdk.featu
 
 #gef
 repos=$repos,http://download.eclipse.org/tools/gef/updates/releases/
-features=$features,org.eclipse.gef.feature.group,org.eclipse.gef.sdk.feature.group,org.eclipse.gef.source.feature.group,org.eclipse.gef.all.feature.group,org.eclipse.gef.examples.feature.group,org.eclipse.zest.feature.group,org.eclipse.zest.sdk.feature.group,org.eclipse.gef.examples.source.feature.group
+features=$features,org.eclipse.gef.feature.group,org.eclipse.gef.sdk.feature.group,org.eclipse.gef.source.feature.group,org.eclipse.gef.examples.feature.group,org.eclipse.zest.feature.group,org.eclipse.zest.sdk.feature.group,org.eclipse.gef.examples.source.feature.group
 
 #Sirius
 repos=$repos,http://download.eclipse.org/sirius/updates/releases/4.1.1/neon
@@ -73,16 +73,4 @@ features=$features,org.python.pydev.feature.feature.group,org.python.pydev.featu
 repos=$repos,http://downloads.puppetlabs.com/geppetto/updates/4.x/
 features=$features,com.puppetlabs.geppetto.eclipse.ide.feature.group
 
-echo installing plugins in {{ eclipse.eclipse_real_home }}
-{{ eclipse.eclipse_real_home }}/eclipse \
-   -nosplash \
-   -application org.eclipse.equinox.p2.director \
-   -repository $repos \
-   -installIU $features \
-   -destination {{ eclipse.eclipse_real_home }} \
-   -roaming \
-   -p2.ws gtk -p2.arch x86_64 \
-   -profile epp.package.jee
-
-[[ $? == 0 ]] && touch {{ eclipse.eclipse_real_home }}/.plugins_saltstate_done 2>/dev/null
-
+{{ eclipse.eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse.eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee

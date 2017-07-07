@@ -7,15 +7,16 @@
 {%- set plugin_config_script = workspace + '/config.sh' %}
 {%- set metadata_plugins_dir = workspace + '/.metadata/.plugins/' %}
 
-{%- set eclipse_home	     = salt['grains.get']('eclipse_home', salt['pillar.get']('eclipse_home', '/opt/eclipse' )) %}
+{%- set eclipse_home = salt['grains.get']('eclipse_home', salt['pillar.get']('eclipse_home', '/opt/eclipse' )) %}
 
-{%- set relname		     = g.get('relname', p.get('relname', 'neon' )) %}
-{%- set package		     = g.get('package', p.get('package', 'java' )) %}
-{%- set release		     = g.get('release', p.get('release', '3' )) %}
-{%- set mirror		     = 'http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/' + relname + '/' + release %}
+{%- set relname	= g.get('relname', p.get('relname', 'neon' )) %}
+{%- set package	= g.get('package', p.get('package', 'java' )) %}
+{%- set release	= g.get('release', p.get('release', '3' )) %}
+{%- set mirror  = 'http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/' + relname + '/' + release %}
+{%- set arch    = '-linux-gtk-x86_64' %}
 
 {%- set default_prefix       = '/usr/share/java' %}
-{%- set default_source_url   = mirror + '/eclipse-' + package + '-' + relname + '-' + release + '-linux-gtk-x86_64.tar.gz' %}
+{%- set default_source_url   = mirror + '/eclipse-' + package + '-' + relname + '-' + release + arch + '.tar.gz' %}
 {%- set default_source_hash  = default_source_url + '.sha512' %}
 {%- set default_dl_opts      = '-s' %}
 {%- set default_archive_type = 'tar' %}
@@ -27,7 +28,7 @@
 {%- if source_url == default_source_url %}
   {%- set source_hash        = default_source_hash %}
 {%- else %}
-  {%- set source_hash        = g.get('source_hash', p.get('source_hash', '' )) %}
+  {%- set source_hash        = g.get('source_hash', p.get('source_hash', default_source_hash )) %}
 {%- endif %}
 
 {%- set dl_opts		     = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
