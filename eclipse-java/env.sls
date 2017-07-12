@@ -4,7 +4,7 @@
 eclipse-config:
   file.managed:
     - name: /etc/profile.d/eclipse-java.sh
-    - source: salt://eclipse-java/eclipse-java.sh
+    - source: salt://eclipse-java/files/eclipse-java.sh
     - template: jinja
     - mode: 644
     - user: root
