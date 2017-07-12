@@ -14,6 +14,12 @@ eclipse-java-install-dir:
     - mode: 755
     - makedirs: True
 
+# curl fails (rc=23) if file exists
+{{ archive_file }}:
+  file.absent:
+    - require_in:
+      - eclipse-java-download-archive
+
 eclipse-java-download-archive:
   cmd.run:
     - name: curl {{ eclipse.dl_opts }} -o '{{ archive_file }}' '{{ eclipse.source_url }}'
@@ -60,6 +66,16 @@ eclipse-java-update-home-symlink:
     - require_in:
       - eclipse-java-remove-archive
       - eclipse-java-remove-archive-hash
+      - eclipse-java-desktop-entry
+
+#### Example requiring 'user' definition in pillar ##
+eclipse-java-desktop-entry:
+  file.managed:
+    - source: salt://eclipse-java/files/eclipse-java.desktop
+    - name: /home/{{ pillar['user'] }}/Desktop/eclipse-java.desktop
+    - user: {{ pillar['user'] }}
+    - group: {{ pillar['user'] }}
+    - mode: 755
 
 eclipse-java-remove-archive:
   file.absent:

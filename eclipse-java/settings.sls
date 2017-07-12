@@ -18,7 +18,7 @@
 {%- set default_prefix       = '/usr/share/java' %}
 {%- set default_source_url   = mirror + '/eclipse-' + package + '-' + relname + '-' + release + arch + '.tar.gz' %}
 {%- set default_source_hash  = default_source_url + '.sha512' %}
-{%- set default_dl_opts      = '-s' %}
+{%- set default_dl_opts      = ' -s ' %}
 {%- set default_archive_type = 'tar' %}
 {%- set default_symlink      = '/usr/bin/eclipse' %}
 {%- set default_realcmd      = eclipse_home + '/eclipse' %}

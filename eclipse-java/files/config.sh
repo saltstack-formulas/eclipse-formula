@@ -1,4 +1,3 @@
-{%- from 'eclipse-java/settings.sls' import eclipse with context %}
 
 #!/usr/bin/env bash
 [[ -z "${1}" ]] && echo "Missing username as script argument." && exit 1
@@ -73,4 +72,6 @@ features=$features,org.python.pydev.feature.feature.group,org.python.pydev.featu
 repos=$repos,http://downloads.puppetlabs.com/geppetto/updates/4.x/
 features=$features,com.puppetlabs.geppetto.eclipse.ide.feature.group
 
-{{ eclipse.eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse.eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
+# Need a java_home
+source /etc/profile
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee

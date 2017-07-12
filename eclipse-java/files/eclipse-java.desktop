@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Eclipse Java
+Comment=Eclipse for Java Developers / Modeling
+Icon=/opt/eclipse-java/icon.png
+Exec=eclipse
+Terminal=false
+Type=Application

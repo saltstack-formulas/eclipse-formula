@@ -4,13 +4,13 @@
 eclipse-config:
   file.managed:
     - name: /etc/profile.d/eclipse-java.sh
-    - source: salt://eclipse-java/eclipse-java.sh
+    - source: salt://eclipse-java/files/eclipse-java.sh
     - template: jinja
     - mode: 644
     - user: root
     - group: root
     - context:
-      eclipse.home: {{ eclipse.eclipse_home }}
+      eclipse_home: {{ eclipse.eclipse_home }}
 
 # Add eclipse-home to alternatives system
 eclipse-home-alt-install:
@@ -66,6 +66,8 @@ eclipse-extend-with-plugins-config-script:
     - force: True
     - require:
       - eclipse-alt-install
+    - context:
+      eclipse_real_home: {{ eclipse.eclipse_real_home }}
 
 eclipse-extend-with-plugins-config-execute:
   cmd.run:
