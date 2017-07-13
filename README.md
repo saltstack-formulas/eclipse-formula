@@ -1,1 +1,0 @@
-# salt-formula-eclipse-java

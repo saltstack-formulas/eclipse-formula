@@ -10,6 +10,7 @@ eclipse-java:
   eclipse_real_home: /usr/share/java/eclipse-java-neon-3
   archive_type: tar
   dl_opts: 
-  unpack_opts: -z
+  unpack_opts: z -C /usr/share/java/eclipse-java-neon-3 --strip-components=1
   prefix: /opt
+  alt_priority: 30
 
