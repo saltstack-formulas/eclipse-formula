@@ -15,6 +15,7 @@ eclipse-java-install-dir:
     - makedirs: True
 
 # curl fails (rc=23) if file exists
+# and test -f cannot detect corrupt archive
 {{ archive_file }}:
   file.absent:
     - require_in:
@@ -68,7 +69,6 @@ eclipse-java-update-home-symlink:
       - eclipse-java-remove-archive-hash
       - eclipse-java-desktop-entry
 
-#### Example requiring 'user' definition in pillar ##
 eclipse-java-desktop-entry:
   file.managed:
     - source: salt://eclipse-java/files/eclipse-java.desktop
@@ -80,18 +80,11 @@ eclipse-java-desktop-entry:
 eclipse-java-remove-archive:
   file.absent:
     - name: {{ archive_file }}
-    - require:
-      - eclipse-java-unpack-archive
 
 {%- if eclipse.source_hash %}
 eclipse-java-remove-archive-hash:
   file.absent:
     - name: {{ archive_file }}.sha512
-    - require:
-      - eclipse-java-unpack-archive
 {%- endif %}
-
-include:
-  - .env
 
 {%- endif %}
