@@ -31,10 +31,10 @@
   {%- set source_hash        = g.get('source_hash', p.get('source_hash', default_source_hash )) %}
 {%- endif %}
 
+{%- set prefix               = g.get('prefix', p.get('prefix', default_prefix )) %}
 {%- set eclipse_real_home    = prefix + '/' + 'eclipse-java' + '-' + relname + '-' + release %}
 {%- set default_unpack_opts  = 'z -C ' + eclipse_real_home + ' --strip-components=1' %}
 {%- set dl_opts              = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
-{%- set prefix               = g.get('prefix', p.get('prefix', default_prefix )) %}
 {%- set eclipse_symlink      = g.get('eclipse_symlink', p.get('eclipse_symlink', '/usr/bin/eclipse' )) %}
 {%- set eclipse_realcmd      = g.get('eclipse_realcmd', p.get('eclipse_realcmd', eclipse_home + '/eclipse' )) %}
 {%- set archive_type         = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
