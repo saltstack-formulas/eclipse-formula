@@ -18,7 +18,8 @@ features=$features,AnyEditTools.feature.group
 
 #maven-apt
 repos=$repos,http://download.jboss.org/jbosstools/updates/m2e-extensions/m2e-apt
-features=$features,org.eclipse.m2e.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
+features=$features,org.eclipse.m2e.feature.feature.group,org.eclipse.m2e.wtp.feature.feature.group,org.eclipse.m2e.wtp.jaxrs.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #jamon
 repos=$repos,http://www.jamon.org/eclipse/updates
@@ -35,6 +36,7 @@ features=$features,org.eclipse.eef.ext.widgets.reference.feature.feature.group,o
 #atlas
 repos=$repos,http://download.eclipse.org/mmt/atl/updates/releases/3.3/
 features=$features,org.eclipse.m2m.atl.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #jautodoc
 repos=$repos,http://jautodoc.sourceforge.net/update/
@@ -59,6 +61,7 @@ features=$features,org.eclipse.draw2d.feature.group,org.eclipse.draw2d.sdk.featu
 #gef
 repos=$repos,http://download.eclipse.org/tools/gef/updates/releases/
 features=$features,org.eclipse.gef.feature.group,org.eclipse.gef.sdk.feature.group,org.eclipse.gef.source.feature.group,org.eclipse.gef.examples.feature.group,org.eclipse.zest.feature.group,org.eclipse.zest.sdk.feature.group,org.eclipse.gef.examples.source.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #Sirius
 repos=$repos,http://download.eclipse.org/sirius/updates/releases/4.1.1/neon
