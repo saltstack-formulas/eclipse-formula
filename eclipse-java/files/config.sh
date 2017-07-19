@@ -74,4 +74,7 @@ features=$features,com.puppetlabs.geppetto.eclipse.ide.feature.group
 
 # Need a java_home
 source /etc/profile
+which java >/dev/null 2>&1
+(( $? != 0 )) && echo "java command not found. Install java and rerun eclipse-java.plugins state" && exit 112
+
 {{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
