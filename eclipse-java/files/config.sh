@@ -2,8 +2,12 @@
 #!/usr/bin/env bash
 [[ -z "${1}" ]] && echo "Missing username as script argument." && exit 1
 
-### Install popular Eclipse plugins. Should be salt-ized in future ###
+# Need a java_home
+source /etc/profile
+which java >/dev/null 2>&1
+(( $? != 0 )) && echo "java command not found. Install java and rerun eclipse-java.plugins state" && exit 112
 
+### Install popular Eclipse plugins. Should be salt-ized in future ###
 #base
 repos=http://download.eclipse.org/releases/neon/
 features=org.eclipse.egit.feature.group
@@ -14,7 +18,7 @@ features=$features,AnyEditTools.feature.group
 
 #maven-apt
 repos=$repos,http://download.jboss.org/jbosstools/updates/m2e-extensions/m2e-apt
-features=$features,org.eclipse.m2e.feature.feature.group,org.eclipse.m2e.wtp.feature.feature.group,org.eclipse.m2e.wtp.jaxrs.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
+features=$features,org.eclipse.m2e.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
 
 #jamon
 repos=$repos,http://www.jamon.org/eclipse/updates
@@ -71,10 +75,5 @@ features=$features,org.python.pydev.feature.feature.group,org.python.pydev.featu
 #puppet
 repos=$repos,http://downloads.puppetlabs.com/geppetto/updates/4.x/
 features=$features,com.puppetlabs.geppetto.eclipse.ide.feature.group
-
-# Need a java_home
-source /etc/profile
-which java >/dev/null 2>&1
-(( $? != 0 )) && echo "java command not found. Install java and rerun eclipse-java.plugins state" && exit 112
 
 {{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
