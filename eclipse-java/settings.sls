@@ -12,7 +12,7 @@
 {%- set relname = g.get('relname', p.get('relname', 'neon' )) %}
 {%- set package = g.get('package', p.get('package', 'java' )) %}
 {%- set release = g.get('release', p.get('release', '3' )) %}
-{%- set mirror  = 'http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/' + relname + '/' + release %}
+{%- set mirror  = 'http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/' + relname + '/' + release %}
 {%- set arch    = '-linux-gtk-x86_64' %}
 
 {%- set default_prefix       = '/usr/share/java' %}
