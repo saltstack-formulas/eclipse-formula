@@ -19,7 +19,6 @@ features=$features,AnyEditTools.feature.group
 #maven-apt
 repos=$repos,http://download.jboss.org/jbosstools/updates/m2e-extensions/m2e-apt
 features=$features,org.eclipse.m2e.feature.feature.group,org.eclipse.m2e.wtp.feature.feature.group,org.eclipse.m2e.wtp.jaxrs.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
-{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #jamon
 repos=$repos,http://www.jamon.org/eclipse/updates
