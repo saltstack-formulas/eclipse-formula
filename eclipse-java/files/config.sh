@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 [[ -z "${1}" ]] && echo "Missing username as script argument." && exit 1
 
@@ -18,7 +17,7 @@ features=$features,AnyEditTools.feature.group
 
 #maven-apt
 repos=$repos,http://download.jboss.org/jbosstools/updates/m2e-extensions/m2e-apt
-features=$features,org.eclipse.m2e.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
+features=$features,org.eclipse.m2e.feature.feature.group,org.eclipse.m2e.wtp.feature.feature.group,org.eclipse.m2e.wtp.jaxrs.feature.feature.group,org.jboss.tools.maven.apt.core,org.jboss.tools.maven.apt.ui,org.jboss.tools.maven.apt.feature.feature.group
 
 #jamon
 repos=$repos,http://www.jamon.org/eclipse/updates
@@ -27,10 +26,12 @@ features=$features,org.jamon.project,org.jamon.eclipse.maven.configurator,org.ja
 #subversion
 repos=$repos,http://community.polarion.com/projects/subversive/download/eclipse/6.0/neon-site/
 features=$features,org.eclipse.team.svn.feature.group,org.eclipse.team.svn.resource.ignore.rules.jdt.feature.group,org.polarion.eclipse.team.svn.connector.feature.group,org.polarion.eclipse.team.svn.connector.svnkit18.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #mpc
 repos=$repos,http://download.eclipse.org/mpc/release/1.5.2/
 features=$features,org.eclipse.eef.ext.widgets.reference.feature.feature.group,org.eclipse.eef.sdk.feature.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #atlas
 repos=$repos,http://download.eclipse.org/mmt/atl/updates/releases/3.3/
@@ -47,6 +48,7 @@ features=$features,com.jformdesigner.feature.group
 #findbugs
 repos=$repos,http://findbugs.cs.umd.edu/eclipse/
 features=$features,edu.umd.cs.findbugs.plugin.eclipse.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #checkstyle
 repos=$repos,http://eclipse-cs.sourceforge.net/update/
@@ -59,6 +61,7 @@ features=$features,org.eclipse.draw2d.feature.group,org.eclipse.draw2d.sdk.featu
 #gef
 repos=$repos,http://download.eclipse.org/tools/gef/updates/releases/
 features=$features,org.eclipse.gef.feature.group,org.eclipse.gef.sdk.feature.group,org.eclipse.gef.source.feature.group,org.eclipse.gef.examples.feature.group,org.eclipse.zest.feature.group,org.eclipse.zest.sdk.feature.group,org.eclipse.gef.examples.source.feature.group
+{{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
 
 #Sirius
 repos=$repos,http://download.eclipse.org/sirius/updates/releases/4.1.1/neon
