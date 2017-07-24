@@ -74,7 +74,11 @@ eclipse-java-desktop-entry:
     - source: salt://eclipse-java/files/eclipse-java.desktop
     - name: /home/{{ pillar['user'] }}/Desktop/eclipse-java.desktop
     - user: {{ pillar['user'] }}
+{% if salt['grains.get']('os_family') == 'Suse' %}
+    - group: users
+{% else %}
     - group: {{ pillar['user'] }}
+{% endif %}
     - mode: 755
 
 eclipse-java-remove-archive:
