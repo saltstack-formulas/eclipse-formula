@@ -17,12 +17,20 @@
 
 {%- set default_prefix       = '/usr/share/java' %}
 {%- set default_source_url   = mirror + '/eclipse-' + package + '-' + relname + '-' + release + arch + '.tar.gz' %}
-{%- set default_source_hash  = default_source_url + '.sha512' %}
+{%- set default_real_home    = default_prefix + '/eclipse-java-' + relname + '-' + release %}
 {%- set default_dl_opts      = ' -s ' %}
 {%- set default_archive_type = 'tar' %}
 {%- set default_symlink      = '/usr/bin/eclipse' %}
-{%- set default_realcmd      = eclipse_home + '/eclipse' %}
+{%- set default_realcmd      = default_real_home + '/eclipse' %}
 {%- set default_alt_priority = '30' %}
+{%- set default_unpack_opts  = 'z -C ' + default_real_home + ' --strip-components=1' %}
+
+{% if salt['grains.get']('saltversioninfo') <= [2016, 11, 6] %}
+   #### hash for eclipse java neon linux x64 tarball ####
+    {%- set default_source_hash  = "md5=74962bf6d674fda7da30aafdb5f6ce86" %}
+{% else %}
+    {%- set default_source_hash  = default_source_url + '.sha512' %}
+{% endif %}
 
 {%- set source_url           = g.get('source_url', p.get('source_url', default_source_url )) %}
 {%- if source_url == default_source_url %}
@@ -32,13 +40,12 @@
 {%- endif %}
 
 {%- set prefix               = g.get('prefix', p.get('prefix', default_prefix )) %}
-{%- set eclipse_real_home    = prefix + '/' + 'eclipse-java' + '-' + relname + '-' + release %}
-{%- set default_unpack_opts  = 'z -C ' + eclipse_real_home + ' --strip-components=1' %}
+{%- set eclipse_real_home    = g.get('realhome', p.get('realhome', default_real_home )) %}
 {%- set dl_opts              = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
+{%- set unpack_opts          = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts )) %}
 {%- set eclipse_symlink      = g.get('eclipse_symlink', p.get('eclipse_symlink', '/usr/bin/eclipse' )) %}
 {%- set eclipse_realcmd      = g.get('eclipse_realcmd', p.get('eclipse_realcmd', eclipse_home + '/eclipse' )) %}
 {%- set archive_type         = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
-{%- set unpack_opts          = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts )) %}
 {%- set alt_priority         = g.get('alt_priority', p.get('alt_priority', default_alt_priority )) %}
 
 {%- set eclipse = {} %}
