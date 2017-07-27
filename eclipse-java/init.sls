@@ -14,20 +14,18 @@ eclipse-java-install-dir:
     - mode: 755
     - makedirs: True
 
-# curl fails (rc=23) if file exists
-# and test -f cannot detect corrupt archive
-{{ archive_file }}:
+# curl fails (rc=23) if file exists, test -f misses corrupt archive
+eclipse-java-remove-prev-archive:
   file.absent:
-    - require_in:
-      - file: eclipse-java-download-archive
+    - name: {{ archive_file }}
+    - require:
+      - file: eclipse-java-install-dir
 
 eclipse-java-download-archive:
   cmd.run:
     - name: curl {{ eclipse.dl_opts }} -o '{{ archive_file }}' '{{ eclipse.source_url }}'
     - require:
-      - file: eclipse-java-install-dir
-    - require_in:
-      - file: eclipse-java-unpacked-dir
+      - file: eclipse-java-remove-prev-archive
 
 eclipse-java-unpacked-dir:
   file.directory:
@@ -43,15 +41,18 @@ eclipse-java-unpack-archive:
   archive.extracted:
     - name: {{ eclipse.eclipse_real_home }}
     - source: file://{{ archive_file }}
-    {%- if eclipse.source_hash %}
-    - source_hash: {{ eclipse.source_hash }}
-    {%- endif %}
     - archive_format: {{ eclipse.archive_type }} 
-    - options: {{ eclipse.unpack_opts }}
-    - enforce_toplevel: False
+  {%- if eclipse.source_hash %}
+    - source_hash: {{ eclipse.source_hash }}
+  {%- endif %}
+  {% if grains['saltversioninfo'] < [2016, 11, 0] %}
+    - tar_options: {{ eclipse.unpack_opts }}
     - if_missing: {{ eclipse.eclipse_realcmd }}
+  {% else %}
+    - options: {{ eclipse.unpack_opts }}
+  {% endif %}
+    - enforce_toplevel: False
     - require:
-      - file: eclipse-java-unpacked-dir
       - cmd: eclipse-java-download-archive
 
 eclipse-java-update-home-symlink:
