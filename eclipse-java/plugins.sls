@@ -1,8 +1,5 @@
 {%- from 'eclipse-java/settings.sls' import eclipse with context %}
 
-include:
-- eclipse-java
-
 # Install some favourite plugins
 eclipse-extend-with-plugins-config-script:
   file.managed:
@@ -18,8 +15,6 @@ eclipse-extend-with-plugins-config-script:
     - group: {{ eclipse.eclipse_user }}
   {% endif %}
     - force: True
-    - require:
-      - eclipse-update-home-symlink
     - context:
       eclipse_realcmd: {{ eclipse.eclipse_realcmd }}
       eclipse_real_home: {{ eclipse.eclipse_real_home }}
