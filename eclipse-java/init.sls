@@ -36,6 +36,8 @@ eclipse-java-unpacked-dir:
     - makedirs: True
     - require_in:
       - file: eclipse-java-unpack-archive
+    - onchanges:
+      - file: eclipse-java-unpack-archive
 
 eclipse-java-unpack-archive:
   archive.extracted:
@@ -56,6 +58,8 @@ eclipse-java-unpack-archive:
   {% endif %}
     - require:
       - cmd: eclipse-java-download-archive
+    - onchanges:
+      - cmd: eclipse-java-download-archive
 
 eclipse-java-update-home-symlink:
   file.symlink:
@@ -63,6 +67,8 @@ eclipse-java-update-home-symlink:
     - target: {{ eclipse.eclipse_real_home }}
     - force: True
     - require:
+      - archive: eclipse-java-unpack-archive
+    - onchanges:
       - archive: eclipse-java-unpack-archive
     - require_in:
       - file: eclipse-java-desktop-entry
@@ -80,15 +86,15 @@ eclipse-java-desktop-entry:
     - group: {{ pillar['user'] }}
   {% endif %}
     - mode: 755
+    - require:
+      - archive: eclipse-java-unpack-archive
+    - onchanges:
+      - archive: eclipse-java-unpack-archive
 
 eclipse-java-remove-archive:
   file.absent:
-    - name: {{ archive_file }}
-
-{%- if eclipse.source_hash %}
-eclipse-java-remove-archive-hash:
-  file.absent:
-    - name: {{ archive_file }}.sha512
-{%- endif %}
+    - names:
+      - {{ archive_file }}
+      - {{ archive_file }}.sha512
 
 {%- endif %}
