@@ -37,7 +37,7 @@ eclipse-java-unpacked-dir:
     - require_in:
       - file: eclipse-java-unpack-archive
     - onchanges:
-      - file: eclipse-java-unpack-archive
+      - file: eclipse-java-download-archive
 
 eclipse-java-unpack-archive:
   archive.extracted:
