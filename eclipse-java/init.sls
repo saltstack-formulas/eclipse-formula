@@ -73,7 +73,6 @@ eclipse-java-update-home-symlink:
     - require_in:
       - file: eclipse-java-desktop-entry
       - file: eclipse-java-remove-archive
-      - file: eclipse-java-remove-archive-hash
 
 eclipse-java-desktop-entry:
   file.managed:
