@@ -26,6 +26,8 @@ eclipse-home-alt-set:
     - path: {{ eclipse.eclipse_real_home }}
     - require:
       - alternatives: eclipse-home-alt-install
+    - onchanges:
+      - alternatives: eclipse-home-alt-install
 
 # Add eclipse to alternatives system
 eclipse-alt-install:
@@ -36,11 +38,16 @@ eclipse-alt-install:
     - priority: {{ eclipse.alt_priority }}
     - require:
       - alternatives: eclipse-home-alt-set
+    - onchanges:
+      - alternatives: eclipse-home-alt-install
+      - alternatives: eclipse-home-alt-set
 
 eclipse-alt-set:
   alternatives.set:
     - name: eclipse
     - path: {{ eclipse.eclipse_realcmd }}
     - require:
+      - alternatives: eclipse-alt-install
+    - onchanges:
       - alternatives: eclipse-alt-install
 
