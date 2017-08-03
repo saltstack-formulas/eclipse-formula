@@ -14,20 +14,18 @@ eclipse-java-install-dir:
     - mode: 755
     - makedirs: True
 
-# curl fails (rc=23) if file exists
-# and test -f cannot detect corrupt archive
-{{ archive_file }}:
+# curl fails (rc=23) if file exists, test -f misses corrupt archive
+eclipse-java-remove-prev-archive:
   file.absent:
-    - require_in:
-      - eclipse-java-download-archive
+    - name: {{ archive_file }}
+    - require:
+      - file: eclipse-java-install-dir
 
 eclipse-java-download-archive:
   cmd.run:
     - name: curl {{ eclipse.dl_opts }} -o '{{ archive_file }}' '{{ eclipse.source_url }}'
     - require:
-      - eclipse-java-install-dir
-    - require_in:
-      - eclipse-java-unpacked-dir
+      - file: eclipse-java-remove-prev-archive
 
 eclipse-java-unpacked-dir:
   file.directory:
@@ -37,25 +35,27 @@ eclipse-java-unpacked-dir:
     - mode: 755
     - makedirs: True
     - require_in:
-      - eclipse-java-unpack-archive
+      - file: eclipse-java-unpack-archive
 
 eclipse-java-unpack-archive:
   archive.extracted:
     - name: {{ eclipse.eclipse_real_home }}
     - source: file://{{ archive_file }}
-    {%- if eclipse.source_hash %}
-    - source_hash: {{ eclipse.source_hash }}
-    {%- endif %}
     - archive_format: {{ eclipse.archive_type }} 
-    - options: {{ eclipse.unpack_opts }}
-    - enforce_toplevel: False
-    - clean: True
-    - user: root
-    - group: root
+  {%- if eclipse.source_hash %}
+    - source_hash: {{ eclipse.source_hash }}
+  {%- endif %}
+  {% if grains['saltversioninfo'] < [2016, 11, 0] %}
+    - tar_options: {{ eclipse.unpack_opts }}
     - if_missing: {{ eclipse.eclipse_realcmd }}
+  {% else %}
+    - options: {{ eclipse.unpack_opts }}
+  {% endif %}
+  {% if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - enforce_toplevel: False
+  {% endif %}
     - require:
-      - eclipse-java-unpacked-dir
-      - eclipse-java-download-archive
+      - cmd: eclipse-java-download-archive
 
 eclipse-java-update-home-symlink:
   file.symlink:
@@ -63,22 +63,22 @@ eclipse-java-update-home-symlink:
     - target: {{ eclipse.eclipse_real_home }}
     - force: True
     - require:
-      - eclipse-java-unpack-archive
+      - archive: eclipse-java-unpack-archive
     - require_in:
-      - eclipse-java-remove-archive
-      - eclipse-java-remove-archive-hash
-      - eclipse-java-desktop-entry
+      - file: eclipse-java-desktop-entry
+      - file: eclipse-java-remove-archive
+      - file: eclipse-java-remove-archive-hash
 
 eclipse-java-desktop-entry:
   file.managed:
     - source: salt://eclipse-java/files/eclipse-java.desktop
     - name: /home/{{ pillar['user'] }}/Desktop/eclipse-java.desktop
     - user: {{ pillar['user'] }}
-{% if salt['grains.get']('os_family') == 'Suse' %}
+  {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
-{% else %}
+  {% else %}
     - group: {{ pillar['user'] }}
-{% endif %}
+  {% endif %}
     - mode: 755
 
 eclipse-java-remove-archive:

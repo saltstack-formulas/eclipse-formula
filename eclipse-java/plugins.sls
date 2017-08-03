@@ -1,8 +1,5 @@
 {%- from 'eclipse-java/settings.sls' import eclipse with context %}
 
-include:
-- eclipse-java
-
 # Install some favourite plugins
 eclipse-extend-with-plugins-config-script:
   file.managed:
@@ -12,11 +9,14 @@ eclipse-extend-with-plugins-config-script:
     - makedirs: True
     - mode: 744
     - user: {{ eclipse.eclipse_user }}
+  {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+    - group: users
+  {% else %}
     - group: {{ eclipse.eclipse_user }}
+  {% endif %}
     - force: True
-    - require:
-      - eclipse-java-update-home-symlink
     - context:
+      eclipse_realcmd: {{ eclipse.eclipse_realcmd }}
       eclipse_real_home: {{ eclipse.eclipse_real_home }}
 
 eclipse-extend-with-plugins-config-execute:
@@ -30,16 +30,20 @@ eclipse-extend-with-plugins-config-execute:
 # Add plugin preferences to workspace
 eclipse-plugin-workspace-plugin-prefs:
   file.recurse:
-  - name: {{ eclipse.metadata_plugins_dir }}
-  - source: salt://eclipse-java/files/plugin-prefs
-  - force: True
-  - file_mode: 744
-  - dir_mode: 755
-  - makedirs: True
-  - user: {{ eclipse.eclipse_user }}
-  - group: {{ eclipse.eclipse_user }}
-  - require:
-    - eclipse-extend-with-plugins-config-execute
+    - name: {{ eclipse.metadata_plugins_dir }}
+    - source: salt://eclipse-java/files/plugin-prefs
+    - force: True
+    - file_mode: 744
+    - dir_mode: 755
+    - makedirs: True
+    - user: {{ eclipse.eclipse_user }}
+  {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+    - group: users
+  {% else %}
+    - group: {{ eclipse.eclipse_user }}
+  {% endif %}
+    - require:
+      - eclipse-extend-with-plugins-config-execute
 
 # if some shipped plugins need <user>, assume isimpson is hardcoded
 eclipse-plugin-replace-username-searchtags-workspace:
@@ -65,7 +69,11 @@ eclipse-plugin-svn-connector-dir:
   file.directory:
     - name: /home/{{ eclipse.eclipse_user }}/.subversion
     - user: {{ eclipse.eclipse_user }}
+  {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+    - group: users
+  {% else %}
     - group: {{ eclipse.eclipse_user }}
+  {% endif %}
     - recurse:
       - user
       - group
