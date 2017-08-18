@@ -26,6 +26,8 @@ eclipse-java-download-archive:
     - name: curl {{ eclipse.dl_opts }} -o '{{ archive_file }}' '{{ eclipse.source_url }}'
     - require:
       - file: eclipse-java-remove-prev-archive
+    - require_in:
+      - file: eclipse-java-unpacked-dir
 
 eclipse-java-unpacked-dir:
   file.directory:
@@ -35,14 +37,27 @@ eclipse-java-unpacked-dir:
     - mode: 755
     - makedirs: True
     - require_in:
-      - file: eclipse-java-unpack-archive
+      - archive: eclipse-java-unpack-archive
+
+  {%- if eclipse.source_hash and grains['saltversioninfo'] <= [2016, 11, 6] %}
+    # See: https://github.com/saltstack/salt/pull/41914
+eclipse-java-check-archive-hash:
+  module.run:
+    - name: file.check_hash
+    - path: {{ archive_file }}
+    - file_hash: {{ eclipse.source_hash }}
+    - onchanges:
+      - cmd: eclipse-java-download-archive
+    - require_in:
+      - archive: eclipse-java-unpack-archive
+  {%- endif %}
 
 eclipse-java-unpack-archive:
   archive.extracted:
     - name: {{ eclipse.eclipse_real_home }}
     - source: file://{{ archive_file }}
     - archive_format: {{ eclipse.archive_type }} 
-  {%- if eclipse.source_hash %}
+  {%- if eclipse.source_hash and grains['saltversioninfo'] > [2016, 11, 6] %}
     - source_hash: {{ eclipse.source_hash }}
   {%- endif %}
   {% if grains['saltversioninfo'] < [2016, 11, 0] %}
@@ -54,7 +69,7 @@ eclipse-java-unpack-archive:
   {% if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - enforce_toplevel: False
   {% endif %}
-    - require:
+    - onchanges:
       - cmd: eclipse-java-download-archive
 
 eclipse-java-update-home-symlink:
@@ -62,12 +77,11 @@ eclipse-java-update-home-symlink:
     - name: {{ eclipse.eclipse_home }}
     - target: {{ eclipse.eclipse_real_home }}
     - force: True
-    - require:
+    - onchanges:
       - archive: eclipse-java-unpack-archive
     - require_in:
       - file: eclipse-java-desktop-entry
       - file: eclipse-java-remove-archive
-      - file: eclipse-java-remove-archive-hash
 
 eclipse-java-desktop-entry:
   file.managed:
@@ -80,15 +94,15 @@ eclipse-java-desktop-entry:
     - group: {{ pillar['user'] }}
   {% endif %}
     - mode: 755
+    - onchanges:
+      - archive: eclipse-java-unpack-archive
 
 eclipse-java-remove-archive:
   file.absent:
-    - name: {{ archive_file }}
-
-{%- if eclipse.source_hash %}
-eclipse-java-remove-archive-hash:
-  file.absent:
-    - name: {{ archive_file }}.sha512
-{%- endif %}
+    - names:
+      - {{ archive_file }}
+      - {{ archive_file }}.sha512
+    - onchanges:
+      - archive: eclipse-java-unpack-archive
 
 {%- endif %}
