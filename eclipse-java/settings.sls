@@ -1,7 +1,7 @@
 {%- set p  = salt['pillar.get']('eclipse-java', {}) %}
 {%- set g  = salt['grains.get']('eclipse-java', {}) %}
 
-{%- set eclipse_user         = p.get['user'] %}
+{%- set eclipse_user         = p.get('user') %}
 {%- set workspace            = '/home/' + eclipse_user + '/workspace' %}
 
 {%- set plugin_config_script = workspace + '/config.sh' %}
