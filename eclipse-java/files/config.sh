@@ -80,3 +80,5 @@ repos=$repos,http://downloads.puppetlabs.com/geppetto/updates/4.x/
 features=$features,com.puppetlabs.geppetto.eclipse.ide.feature.group
 
 {{ eclipse_real_home }}/eclipse -nosplash -application org.eclipse.equinox.p2.director -repository $repos -installIU $features -destination {{ eclipse_real_home }} -roaming -p2.ws gtk -p2.arch x86_64 -profile epp.package.jee
+
+exit 0
