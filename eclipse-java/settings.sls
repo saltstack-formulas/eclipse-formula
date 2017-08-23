@@ -48,10 +48,11 @@
 {%- set metadata_plugins     = eclipse_workspace + '/.metadata/.plugins/' %}
 
 {%- set eclipse = {} %}
-{%- do eclipse.update( {  'source_url'           : source_url,
-                          'source_hash'          : source_hash,
-                          'eclipse_home'         : eclipse_home,
+{%- do eclipse.update( {  'eclipse_home'         : eclipse_home,
+                          'eclipse_user'         : eclipse_user,
                           'svn_version'          : svn_version,
+                          'source_url'           : source_url,
+                          'source_hash'          : source_hash,
                           'dl_opts'              : dl_opts,
                           'unpack_opts'          : unpack_opts,
                           'archive_type'         : archive_type,
@@ -59,8 +60,7 @@
                           'eclipse_real_home'    : eclipse_real_home,
                           'eclipse_symlink'      : eclipse_symlink,
                           'eclipse_realcmd'      : eclipse_realcmd,
-                          'eclipse_user'         : eclipse_user,
+                          'alt_priority'         : alt_priority,
                           'eclipse_workspace'    : eclipse_workspace,
                           'metadata_plugins'     : metadata_plugins,
-                          'alt_priority'         : alt_priority,
                      }) %}
