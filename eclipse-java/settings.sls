@@ -1,20 +1,20 @@
 {%- set p  = salt['pillar.get']('eclipse-java', {}) %}
 {%- set g  = salt['grains.get']('eclipse-java', {}) %}
 
-{%- set eclipse_home     = salt['grains.get']('eclipse_home', salt['pillar.get']('eclipse_home', '/opt/eclipse' )) %}
-{%- set eclipse_user     = salt['grains.get']('user', salt['pillar.get']('user')) %}
-{%- set workspace        = '/home/' + eclipse_user + '/workspace' %}
-{%- set metadata_plugins = workspace + '/.metadata/.plugins/' %}
+{%- set eclipse_home         = salt['grains.get']('eclipse_home', salt['pillar.get']('eclipse_home', '/opt/eclipse' )) %}
+{%- set eclipse_user         = salt['grains.get']('user', salt['pillar.get']('user')) %}
+{%- set svn_version          = salt['grains.get']('svn_version', salt['pillar.get']('svn_version', '1.9.3' )) %}
 
-{%- set relname = g.get('relname', p.get('relname', 'neon' )) %}
-{%- set package = g.get('package', p.get('package', 'java' )) %}
-{%- set release = g.get('release', p.get('release', '3' )) %}
-{%- set mirror  = 'http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/' + relname + '/' + release %}
-{%- set arch    = '-linux-gtk-x86_64' %}
+{%- set name                 = g.get('name', p.get('name', 'neon' )) %}
+{%- set package              = g.get('package', p.get('package', 'java' )) %}
+{%- set release              = g.get('release', p.get('release', '3' )) %}
+{%- set mirror               = 'http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/' %}
+{%- set mirrorpath           = mirror + name + '/' + release %}
+{%- set arch                 = '-linux-gtk-x86_64' %}
 
 {%- set default_prefix       = '/usr/share/java' %}
-{%- set default_source_url   = mirror + '/eclipse-' + package + '-' + relname + '-' + release + arch + '.tar.gz' %}
-{%- set default_real_home    = default_prefix + '/eclipse-java-' + relname + '-' + release %}
+{%- set default_source_url   = mirrorpath + '/eclipse-' + package + '-' + name + '-' + release + arch + '.tar.gz' %}
+{%- set default_real_home    = default_prefix + '/eclipse-java-' + name + '-' + release %}
 {%- set default_dl_opts      = ' -s ' %}
 {%- set default_archive_type = 'tar' %}
 {%- set default_symlink      = '/usr/bin/eclipse' %}
@@ -44,11 +44,14 @@
 {%- set eclipse_realcmd      = g.get('eclipse_realcmd', p.get('eclipse_realcmd', eclipse_home + '/eclipse' )) %}
 {%- set archive_type         = g.get('archive_type', p.get('archive_type', default_archive_type )) %}
 {%- set alt_priority         = g.get('alt_priority', p.get('alt_priority', default_alt_priority )) %}
+{%- set eclipse_workspace    = '/home/' + eclipse_user + '/workspace' %}
+{%- set metadata_plugins     = eclipse_workspace + '/.metadata/.plugins/' %}
 
 {%- set eclipse = {} %}
 {%- do eclipse.update( {  'source_url'           : source_url,
                           'source_hash'          : source_hash,
                           'eclipse_home'         : eclipse_home,
+                          'svn_version'          : svn_version,
                           'dl_opts'              : dl_opts,
                           'unpack_opts'          : unpack_opts,
                           'archive_type'         : archive_type,
@@ -57,7 +60,7 @@
                           'eclipse_symlink'      : eclipse_symlink,
                           'eclipse_realcmd'      : eclipse_realcmd,
                           'eclipse_user'         : eclipse_user,
-                          'workspace'            : workspace,
+                          'eclipse_workspace'    : eclipse_workspace,
                           'metadata_plugins'     : metadata_plugins,
                           'alt_priority'         : alt_priority,
                      }) %}

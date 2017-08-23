@@ -1,9 +1,13 @@
 {%- from 'eclipse-java/settings.sls' import eclipse with context %}
 
+{%- set workspace = eclipse.eclipse_workspace %}
+{%- set metadata  = eclipse.eclipse_metadata  %}
+{%- set svn_prefs = metadata + '/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs' %}
+
 # Install some favourite plugins
 eclipse-extend-with-plugins-config-script:
   file.managed:
-    - name: {{ eclipse.workspace }}/config.sh
+    - name: {{ workspace }}/config.sh
     - source: salt://eclipse-java/files/config.sh
     - template: jinja
     - makedirs: True
@@ -21,7 +25,7 @@ eclipse-extend-with-plugins-config-script:
 
 eclipse-extend-with-plugins-config-execute:
   cmd.run:
-    - name: {{ eclipse.workspace }}/config.sh {{ eclipse.eclipse_user }}
+    - name: {{ workspace }}/config.sh {{ eclipse.eclipse_user }}
     - cwd: /root
     - unless: test -f {{ eclipse.eclipse_home }}/.plugins_saltstate_done
     - onchanges:
@@ -30,7 +34,7 @@ eclipse-extend-with-plugins-config-execute:
 # Add plugin preferences to workspace
 eclipse-plugin-workspace-plugin-prefs:
   file.recurse:
-    - name: {{ eclipse.metadata_plugins }}
+    - name: {{ eclipse.metadata }}
     - source: salt://eclipse-java/files/plugin-prefs
     - force: True
     - file_mode: 744
@@ -48,19 +52,16 @@ eclipse-plugin-workspace-plugin-prefs:
 # if some shipped plugins need <user>, assume isimpson is hardcoded
 eclipse-plugin-replace-username-searchtags-workspace:
   cmd.run:
-    - name: grep -rl isimpson {{ eclipse.workspace }} | xargs sed -i "s/isimpson/{{ eclipse.eclipse_user }}/g" 2>/dev/null
-    - onlyif: test -d {{ eclipse.workspace }}
+    - name: grep -rl isimpson {{ workspace }} | xargs sed -i "s/isimpson/{{ eclipse.eclipse_user }}/g" 2>/dev/null
+    - onlyif: test -d {{ workspace }}
     - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
 
 # Setup SVN connector for Eclipse
-{%- set svn_prefs   = eclipse.metadata_plugins + '/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs' %}
-{%- set svn_version = '1.9.3' %}
-
 eclipse-plugin-svn-connector-config:
   file.append:
     - name: {{ svn_prefs }}
-    - text: "preference.core.svnconnector=org.eclipse.team.svn.connector.svnkit1{{ svn_version }}"
+    - text: "preference.core.svnconnector=org.eclipse.team.svn.connector.svnkit1{{ eclipse.svn_version }}"
     - onlyif: test -f {{ svn_prefs }}
     - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
