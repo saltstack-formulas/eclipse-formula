@@ -24,13 +24,13 @@ eclipse-extend-with-plugins-config-execute:
     - name: {{ eclipse.workspace }}/config.sh {{ eclipse.eclipse_user }}
     - cwd: /root
     - unless: test -f {{ eclipse.eclipse_home }}/.plugins_saltstate_done
-    - require:
+    - onchanges:
       - eclipse-extend-with-plugins-config-script
 
 # Add plugin preferences to workspace
 eclipse-plugin-workspace-plugin-prefs:
   file.recurse:
-    - name: {{ eclipse.metadata_plugins_dir }}
+    - name: {{ eclipse.metadata_plugins }}
     - source: salt://eclipse-java/files/plugin-prefs
     - force: True
     - file_mode: 744
@@ -42,7 +42,7 @@ eclipse-plugin-workspace-plugin-prefs:
   {% else %}
     - group: {{ eclipse.eclipse_user }}
   {% endif %}
-    - require:
+    - onchanges:
       - eclipse-extend-with-plugins-config-execute
 
 # if some shipped plugins need <user>, assume isimpson is hardcoded
@@ -54,7 +54,7 @@ eclipse-plugin-replace-username-searchtags-workspace:
       - eclipse-plugin-workspace-plugin-prefs
 
 # Setup SVN connector for Eclipse
-{%- set svn_prefs   = eclipse.metadata_plugins_dir + '/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs' %}
+{%- set svn_prefs   = eclipse.metadata_plugins + '/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs' %}
 {%- set svn_version = '1.9.3' %}
 
 eclipse-plugin-svn-connector-config:
@@ -62,7 +62,7 @@ eclipse-plugin-svn-connector-config:
     - name: {{ svn_prefs }}
     - text: "preference.core.svnconnector=org.eclipse.team.svn.connector.svnkit1{{ svn_version }}"
     - onlyif: test -f {{ svn_prefs }}
-    - require:
+    - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
 
 eclipse-plugin-svn-connector-dir:
@@ -77,6 +77,6 @@ eclipse-plugin-svn-connector-dir:
     - recurse:
       - user
       - group
-    - require:
+    - onchanges:
       - eclipse-plugin-svn-connector-config
 

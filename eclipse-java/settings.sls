@@ -1,13 +1,10 @@
 {%- set p  = salt['pillar.get']('eclipse-java', {}) %}
 {%- set g  = salt['grains.get']('eclipse-java', {}) %}
 
-{%- set eclipse_user         = p.get('user') %}
-{%- set workspace            = '/home/' + eclipse_user + '/workspace' %}
-
-{%- set plugin_config_script = workspace + '/config.sh' %}
-{%- set metadata_plugins_dir = workspace + '/.metadata/.plugins/' %}
-
-{%- set eclipse_home = salt['grains.get']('eclipse_home', salt['pillar.get']('eclipse_home', '/opt/eclipse' )) %}
+{%- set eclipse_home     = salt['grains.get']('eclipse_home', salt['pillar.get']('eclipse_home', '/opt/eclipse' )) %}
+{%- set eclipse_user     = salt['grains.get']('user', salt['pillar.get']('user')) %}
+{%- set workspace        = '/home/' + eclipse_user + '/workspace' %}
+{%- set metadata_plugins = workspace + '/.metadata/.plugins/' %}
 
 {%- set relname = g.get('relname', p.get('relname', 'neon' )) %}
 {%- set package = g.get('package', p.get('package', 'java' )) %}
@@ -49,10 +46,7 @@
 {%- set alt_priority         = g.get('alt_priority', p.get('alt_priority', default_alt_priority )) %}
 
 {%- set eclipse = {} %}
-{%- do eclipse.update( {  'relname'              : relname,
-                          'package'              : package,
-                          'release'              : release,
-                          'source_url'           : source_url,
+{%- do eclipse.update( {  'source_url'           : source_url,
                           'source_hash'          : source_hash,
                           'eclipse_home'         : eclipse_home,
                           'dl_opts'              : dl_opts,
@@ -64,7 +58,6 @@
                           'eclipse_realcmd'      : eclipse_realcmd,
                           'eclipse_user'         : eclipse_user,
                           'workspace'            : workspace,
-                          'plugin_config_script' : plugin_config_script,
-                          'metadata_plugins_dir' : metadata_plugins_dir,
+                          'metadata_plugins'     : metadata_plugins,
                           'alt_priority'         : alt_priority,
                      }) %}
