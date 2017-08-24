@@ -1,8 +1,7 @@
 {%- from 'eclipse-java/settings.sls' import eclipse with context %}
 
 {%- set workspace = eclipse.eclipse_workspace %}
-{%- set metadata  = eclipse.eclipse_metadata  %}
-{%- set svn_prefs = metadata + '/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs' %}
+{%- set svn_prefs = eclipse.eclipse_metadata ~ '/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs' %}
 
 # Install some favourite plugins
 eclipse-extend-with-plugins-config-script:
@@ -34,7 +33,7 @@ eclipse-extend-with-plugins-config-execute:
 # Add plugin preferences to workspace
 eclipse-plugin-workspace-plugin-prefs:
   file.recurse:
-    - name: {{ eclipse.metadata }}
+    - name: {{ eclipse.eclipse_metadata }}
     - source: salt://eclipse-java/files/plugin-prefs
     - force: True
     - file_mode: 744

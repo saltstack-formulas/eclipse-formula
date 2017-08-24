@@ -17,5 +17,5 @@ eclipse-java:
   eclipse_realcmd: /usr/share/java/eclipse-java-neon-3/eclipse
   alt_priority: 30
   eclipse_workspace: /home/{{ pillar['user'] }}/workspace
-  metadata_plugins: /home/{{ pillar['user'] }}/workspace/.metadata/.plugins
+  eclipse_metadata: /home/{{ pillar['user'] }}/workspace/.metadata/.plugins
 
