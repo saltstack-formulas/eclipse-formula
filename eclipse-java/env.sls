@@ -17,16 +17,16 @@ eclipse-config:
 
 eclipse-get-preferences-importfile-from-url:
   cmd.run:
-    - name: curl -s -o /home/{{ eclipse.user }}/.eclipse/my-preferences.xml '{{ eclipse.prefs_url }}'
-    - if_missing: /home/{{ eclipse.user }}/my-preferences.xml
+    - name: curl -s -o {{ eclipse.workspace }}/my-preferences.xml '{{ eclipse.prefs_url }}'
+    - if_missing: {{ eclipse.workspace }}/my-preferences.xml
 
   {% elif eclipse.prefs_path != 'undefined' and eclipse.user != 'undefined' %}
 
 eclipse-get-preferences-importfile-from-path:
   file.managed:
-    - name: /home/{{ eclipse.user }}/my-preferences.xml
+    - name: {{ eclipse.workspace }}/my-preferences.xml
     - source: {{ eclipse.prefs_path }}
-    - if_missing: /home/{{ eclipse.user }}/my-preferences.xml
+    - if_missing: {{ eclipse.workspace }}/my-preferences.xml
 
   {% endif %}
 
@@ -44,6 +44,18 @@ eclipse-preferences-file-perms:
     - onchanges:
       - cmd: eclipse-get-preferences-importfile-from-url
       - file: eclipse-get-preferences-importfile-from-path
+
+eclipse-bookmarks:
+  file.managed:
+    - name: {{ eclipse.workspace }}/salted-bookmarks.xml
+    - source: salt://eclipse-java/files/bookmarks.xml
+    - if_missing: /home/{{ eclipse.user }}/salted-bookmarks.xml
+   {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
+    - group: users
+   {% else %}
+    - group: {{ eclipse.user }}
+   {% endif %}
+
 {% endif %}
 
 # Add eclipse-home to alternatives system
