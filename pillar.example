@@ -1,8 +1,8 @@
 eclipse_home: /opt/eclipse
-#default_user: undefined
+#default_user: undefined_user
 svn_version: 1.9.3
 eclipse-java:
-  #default_user: undefined
+  #default_user: undefined_user
   relname: neon
   package: java
   release: 3
@@ -19,7 +19,7 @@ eclipse-java:
   real_home: /usr/share/java/eclipse-java-neon-3
   realcmd: /usr/share/java/eclipse-java-neon-3/eclipse
   alt_priority: 30
-  workspace: /home/undefined/workspace
-  metadata: /home/undefined/workspace/.metadata/.plugins
+  workspace: /home/undefined_user/workspace
+  metadata: /home/undefined_user/workspace/.metadata/.plugins
   svn_prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
 

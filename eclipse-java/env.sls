@@ -12,22 +12,21 @@ eclipse-config:
     - context:
       eclipse_home: {{ eclipse.eclipse_home }}
 
-{% if eclipse.user != 'undefined' %}
-  {% if eclipse.prefs_url != 'undefined' %}
+{% if eclipse.user != 'undefined_user' %}
 
+  {% if eclipse.prefs_url != 'undefined' %}
 eclipse-get-preferences-importfile-from-url:
   cmd.run:
     - name: curl -s -o {{ eclipse.workspace }}/my-preferences.xml '{{ eclipse.prefs_url }}'
     - if_missing: {{ eclipse.workspace }}/my-preferences.xml
 
-  {% elif eclipse.prefs_path != 'undefined' and eclipse.user != 'undefined' %}
+  {% elif eclipse.prefs_path != 'undefined' %}
 
 eclipse-get-preferences-importfile-from-path:
   file.managed:
     - name: {{ eclipse.workspace }}/my-preferences.xml
     - source: {{ eclipse.prefs_path }}
     - if_missing: {{ eclipse.workspace }}/my-preferences.xml
-
   {% endif %}
 
 eclipse-preferences-file-perms:

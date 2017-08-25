@@ -83,7 +83,8 @@ eclipse-java-update-home-symlink:
       - file: eclipse-java-desktop-entry
       - file: eclipse-java-remove-archive
 
-{% if eclipse.user != 'undefined' %}
+{% if eclipse.user != 'undefined_user' %}
+
 eclipse-java-desktop-entry:
   file.managed:
     - source: salt://eclipse-java/files/eclipse-java.desktop

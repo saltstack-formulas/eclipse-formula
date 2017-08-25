@@ -12,7 +12,7 @@
 {%- set mirrorpath             = mirror ~ name ~ '/' ~ release %}
 {%- set arch                   = '-linux-gtk-x86_64' %}
 
-{%- set default_user           = 'undefined' %}
+{%- set default_user           = 'undefined_user' %}
 {%- set default_prefs_url      = 'undefined' %}
 {%- set default_prefs_path     = 'undefined' %}
 {%- set default_prefix         = '/usr/share/java' %}

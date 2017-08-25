@@ -1,6 +1,6 @@
 {%- from 'eclipse-java/settings.sls' import eclipse with context %}
 
-{% if eclipse.user != 'undefined' %}
+{% if eclipse.user != 'undefined_user' %}
 
 # Install some favourite plugins
 eclipse-extend-with-plugins-config-script:
