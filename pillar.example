@@ -1,13 +1,16 @@
 eclipse_home: /opt/eclipse
-eclipse_user: 
+#default_user: undefined
 svn_version: 1.9.3
 eclipse-java:
+  #default_user: undefined
   relname: neon
   package: java
   release: 3
-  source_url: http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/neon/3/eclipse-java-neon-3-linux-gtk-x86_64.tar.gz
-  ## source_hash: http://ftp.osuosl.org/pub/eclipse/technology/epp/downloads/release/neon/3/eclipse-java-neon-3-linux-gtk-x86_64.tar.gz.sha512
+  source_url: http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/neon/3/eclipse-java-neon-3-linux-gtk-x86_64.tar.gz
+  ## source_hash: http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/neon/3/eclipse-java-neon-3-linux-gtk-x86_64.tar.gz.sha512
   source_hash: md5=74962bf6d674fda7da30aafdb5f6ce86 
+  prefs_url: undefined
+  prefs_path: undefined
   dl_opts: -s
   unpack_opts: z -C /usr/share/java/eclipse-java-neon-3 --strip-components=1
   archive_type: tar
@@ -16,6 +19,7 @@ eclipse-java:
   eclipse_symlink: /usr/bin/eclipse
   eclipse_realcmd: /usr/share/java/eclipse-java-neon-3/eclipse
   alt_priority: 30
-  eclipse_workspace: /home/{{ pillar['user'] }}/workspace
-  eclipse_metadata: /home/{{ pillar['user'] }}/workspace/.metadata/.plugins
+  workspace: /home/undefined/workspace
+  metadata: /home/undefined/workspace/.metadata/.plugins
+  svn_prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
 

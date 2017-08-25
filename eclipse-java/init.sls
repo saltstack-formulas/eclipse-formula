@@ -31,7 +31,7 @@ eclipse-java-download-archive:
 
 eclipse-java-unpacked-dir:
   file.directory:
-    - name: {{ eclipse.eclipse_real_home }}
+    - name: {{ eclipse.real_home }}
     - user: root
     - group: root
     - mode: 755
@@ -54,7 +54,7 @@ eclipse-java-check-archive-hash:
 
 eclipse-java-unpack-archive:
   archive.extracted:
-    - name: {{ eclipse.eclipse_real_home }}
+    - name: {{ eclipse.real_home }}
     - source: file://{{ archive_file }}
     - archive_format: {{ eclipse.archive_type }} 
   {%- if eclipse.source_hash and grains['saltversioninfo'] > [2016, 11, 6] %}
@@ -62,7 +62,7 @@ eclipse-java-unpack-archive:
   {%- endif %}
   {% if grains['saltversioninfo'] < [2016, 11, 0] %}
     - tar_options: {{ eclipse.unpack_opts }}
-    - if_missing: {{ eclipse.eclipse_realcmd }}
+    - if_missing: {{ eclipse.realcmd }}
   {% else %}
     - options: {{ eclipse.unpack_opts }}
   {% endif %}
@@ -75,7 +75,7 @@ eclipse-java-unpack-archive:
 eclipse-java-update-home-symlink:
   file.symlink:
     - name: {{ eclipse.eclipse_home }}
-    - target: {{ eclipse.eclipse_real_home }}
+    - target: {{ eclipse.real_home }}
     - force: True
     - onchanges:
       - archive: eclipse-java-unpack-archive
@@ -83,19 +83,22 @@ eclipse-java-update-home-symlink:
       - file: eclipse-java-desktop-entry
       - file: eclipse-java-remove-archive
 
+{% if eclipse.user != 'undefined' %}
 eclipse-java-desktop-entry:
   file.managed:
     - source: salt://eclipse-java/files/eclipse-java.desktop
-    - name: /home/{{ pillar['user'] }}/Desktop/eclipse-java.desktop
-    - user: {{ pillar['user'] }}
+    - name: /home/{{ eclipse.user }}/Desktop/eclipse-java.desktop
+    - user: {{ eclipse.user }}
   {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
   {% else %}
-    - group: {{ pillar['user'] }}
+    - group: {{ eclipse.user }}
   {% endif %}
-    - mode: 755
+    - mode: 655
+    - if_missing: /home/{{ eclipse.user }}/Desktop/eclipse-java.desktop
     - onchanges:
       - archive: eclipse-java-unpack-archive
+{% endif %}
 
 eclipse-java-remove-archive:
   file.absent:
