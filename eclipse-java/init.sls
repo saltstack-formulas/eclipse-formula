@@ -4,7 +4,7 @@
 
 {%- if eclipse.source_url is defined %}
 
-  {%- set archive_file = eclipse.prefix + '/' + eclipse.source_url.split('/') | last %}
+  {%- set archive_file = eclipse.prefix ~ '/' ~ eclipse.source_url.split('/') | last %}
 
 eclipse-java-install-dir:
   file.directory:
