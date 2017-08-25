@@ -14,10 +14,10 @@ eclipse-java:
   dl_opts: -s
   unpack_opts: z -C /usr/share/java/eclipse-java-neon-3 --strip-components=1
   archive_type: tar
-  prefix: /usr/share/java
-  eclipse_real_home: /usr/share/java/eclipse-java-neon-3
   eclipse_symlink: /usr/bin/eclipse
-  eclipse_realcmd: /usr/share/java/eclipse-java-neon-3/eclipse
+  prefix: /usr/share/java
+  real_home: /usr/share/java/eclipse-java-neon-3
+  realcmd: /usr/share/java/eclipse-java-neon-3/eclipse
   alt_priority: 30
   workspace: /home/undefined/workspace
   metadata: /home/undefined/workspace/.metadata/.plugins
