@@ -53,8 +53,7 @@ eclipse-plugin-replace-username-searchtags-workspace:
     - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
 
-  {% if svn_version != 'undefined' %}
-
+  {% if eclipse.svn_version != 'undefined' %}
 # Setup SVN connector for Eclipse
 eclipse-plugin-svn-connector-config:
   file.append:
