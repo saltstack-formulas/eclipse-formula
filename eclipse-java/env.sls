@@ -29,7 +29,7 @@ eclipse-get-preferences-importfile-from-path:
     - if_missing: {{ eclipse.workspace }}/my-preferences.xml
   {% endif %}
 
-  {% if eclipse.prefs_url != 'undefined' %}
+  {% if eclipse.prefs_url != 'undefined' or eclipse.prefs_path != 'undefined' %}
 eclipse-preferences-file-perms:
   file.managed:
     - name: /home/{{ eclipse.user }}/my-preferences.xml
