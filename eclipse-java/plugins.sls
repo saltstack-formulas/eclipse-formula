@@ -24,7 +24,6 @@ eclipse-extend-with-plugins-config-execute:
   cmd.run:
     - name: {{ eclipse.workspace }}/config.sh {{ eclipse.user }}
     - cwd: /root
-    - unless: test -f {{ eclipse.home }}/.plugins_saltstate_done
     - onchanges:
       - eclipse-extend-with-plugins-config-script
 
@@ -55,6 +54,7 @@ eclipse-plugin-replace-username-searchtags-workspace:
       - eclipse-plugin-workspace-plugin-prefs
 
   {% if svn_version != 'undefined' %}
+
 # Setup SVN connector for Eclipse
 eclipse-plugin-svn-connector-config:
   file.append:
@@ -78,6 +78,6 @@ eclipse-plugin-svn-connector-dir:
       - group
     - onchanges:
       - eclipse-plugin-svn-connector-config
-  {% endif %}
 
+  {% endif %}
 {% endif %}
