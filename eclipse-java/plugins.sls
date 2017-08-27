@@ -24,7 +24,7 @@ eclipse-extend-with-plugins-config-execute:
   cmd.run:
     - name: {{ eclipse.workspace }}/config.sh {{ eclipse.user }}
     - cwd: /root
-    - onchanges:
+    - require:
       - eclipse-extend-with-plugins-config-script
 
 # Add plugin preferences to workspace
