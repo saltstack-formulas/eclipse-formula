@@ -18,6 +18,7 @@ eclipse-config:
 eclipse-get-preferences-importfile-from-url:
   cmd.run:
     - name: curl -s -o {{ eclipse.workspace }}/my-preferences.xml '{{ eclipse.prefs_url }}'
+    - runas: {{ eclipse.user }}
     - if_missing: {{ eclipse.workspace }}/my-preferences.xml
 
   {% elif eclipse.prefs_path != 'undefined' %}
@@ -26,24 +27,13 @@ eclipse-get-preferences-importfile-from-path:
   file.managed:
     - name: {{ eclipse.workspace }}/my-preferences.xml
     - source: {{ eclipse.prefs_path }}
-    - if_missing: {{ eclipse.workspace }}/my-preferences.xml
-  {% endif %}
-
-  {% if eclipse.prefs_url != 'undefined' or eclipse.prefs_path != 'undefined' %}
-eclipse-preferences-file-perms:
-  file.managed:
-    - name: /home/{{ eclipse.user }}/my-preferences.xml
-    - replace: False
-    - mode: 644
     - user: {{ eclipse.user }}
    {% if salt['grains.get']('os_family') == 'Suse' or salt['grains.get']('os') == 'SUSE' %}
     - group: users
    {% else %}
     - group: {{ eclipse.user }}
    {% endif %}
-    - onchanges:
-      - cmd: eclipse-get-preferences-importfile-from-url
-      - file: eclipse-get-preferences-importfile-from-path
+    - if_missing: {{ eclipse.workspace }}/my-preferences.xml
   {% endif %}
 
 eclipse-bookmarks:
