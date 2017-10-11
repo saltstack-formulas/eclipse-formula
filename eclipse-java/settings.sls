@@ -20,7 +20,7 @@
 {%- set default_real_home      = default_prefix ~ '/eclipse-java-' ~ name ~ '-' ~ release %}
 {%- set default_dl_opts        = ' -s ' %}
 {%- set default_dl_retries     = '1' %}
-{%- set default_dl_interval    = '30' %}
+{%- set default_dl_interval    = '60' %}
 {%- set default_archive_type   = 'tar' %}
 {%- set default_symlink        = '/usr/bin/eclipse' %}
 {%- set default_realcmd        = default_real_home ~ '/eclipse' %}
