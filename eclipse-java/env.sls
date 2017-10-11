@@ -20,6 +20,11 @@ eclipse-get-preferences-importfile-from-url:
     - name: curl -s -o {{ eclipse.workspace }}/my-preferences.xml '{{ eclipse.prefs_url }}'
     - runas: {{ eclipse.user }}
     - if_missing: {{ eclipse.workspace }}/my-preferences.xml
+    {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
+    - retry:
+        attempts: {{ eclipse.dl_retries }}
+        interval: {{ eclipse.dl_interval }}
+    {% endif %}
 
   {% elif eclipse.prefs_path != 'undefined' %}
 

@@ -19,6 +19,8 @@
 {%- set default_source_url     = mirrorpath ~ '/eclipse-' ~ package ~ '-' ~ name ~ '-' ~ release ~ arch ~ '.tar.gz' %}
 {%- set default_real_home      = default_prefix ~ '/eclipse-java-' ~ name ~ '-' ~ release %}
 {%- set default_dl_opts        = ' -s ' %}
+{%- set default_dl_retries     = '1' %}
+{%- set default_dl_interval    = '30' %}
 {%- set default_archive_type   = 'tar' %}
 {%- set default_symlink        = '/usr/bin/eclipse' %}
 {%- set default_realcmd        = default_real_home ~ '/eclipse' %}
@@ -45,6 +47,8 @@
 {%- set prefix         = g.get('prefix', p.get('prefix', default_prefix )) %}
 {%- set real_home      = g.get('realhome', p.get('realhome', default_real_home )) %}
 {%- set dl_opts        = g.get('dl_opts', p.get('dl_opts', default_dl_opts)) %}
+{%- set dl_retries     = g.get('dl_retries', p.get('dl_retries', default_dl_retries)) %}
+{%- set dl_interval    = g.get('dl_interval', p.get('dl_interval', default_dl_interval)) %}
 {%- set unpack_opts    = g.get('unpack_opts', p.get('unpack_opts', default_unpack_opts )) %}
 {%- set symlink        = g.get('symlink', p.get('symlink', '/usr/bin/eclipse' )) %}
 {%- set realcmd        = g.get('realcmd', p.get('realcmd', real_home ~ '/eclipse' )) %}
@@ -64,6 +68,8 @@
                           'prefs_path'       : prefs_path,
                           'prefix'           : prefix,
                           'dl_opts'          : dl_opts,
+                          'dl_retries'       : dl_retries,
+                          'dl_interval'      : dl_interval,
                           'unpack_opts'      : unpack_opts,
                           'archive_type'     : archive_type,
                           'real_home'        : real_home,

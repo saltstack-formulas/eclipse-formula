@@ -28,6 +28,11 @@ eclipse-java-download-archive:
       - file: eclipse-java-remove-prev-archive
     - require_in:
       - file: eclipse-java-unpacked-dir
+    {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
+    - retry:
+        attempts: {{ eclipse.dl_retries }}
+        interval: {{ eclipse.dl_interval }}
+    {% endif %}
 
 eclipse-java-unpacked-dir:
   file.directory:

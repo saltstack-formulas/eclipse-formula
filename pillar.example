@@ -12,6 +12,8 @@ eclipse-java:
   prefs_url: undefined
   prefs_path: undefined
   dl_opts: -s
+  dl_retries: 2
+  dl_interval: 60
   unpack_opts: z -C /usr/share/java/eclipse-java-neon-3 --strip-components=1
   archive_type: tar
   eclipse_symlink: /usr/bin/eclipse
