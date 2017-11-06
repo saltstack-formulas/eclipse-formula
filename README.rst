@@ -1,8 +1,22 @@
 ========
-eclipse-java
+eclipse
 ========
 
-Formula to set up and configure Eclipse IDE (for Java) from tarball archive sourced via URL. 
+Formula to configure the selected Eclipse release and edition (default java) published by the Eclipse Foundation packaging project (epp), and mirrored by IBM.
+
+- Editions
+  - java (formula default)
+  - jee
+  - cpp
+  - committers
+  - php
+  - dsl
+  - javascript
+  - modeling
+  - rcp
+  - parallel
+  - testing
+  - scout
 
 .. note::
 
@@ -15,19 +29,29 @@ Available states
 .. contents::
     :local:
 
-``eclipse-java``
+``eclipse``
 ------------
+Downloads the archive from Eclipse Foundation website, unpacks locally and installs the IDE on the Operating System.
 
-Downloads the tarball from the eclipse-java:source_url configured as either a pillar or grain and will not do anything
-if source_url is omitted. Then unpacks the archive into eclipse-java:prefix (defaults to /usr/share/java/eclipse-java).
 
-``eclipse-java.env``
-----------------
-Full integration with linux alternatives system
+``eclipse.developer``
+------------
+Create Desktop shortcuts. Optionally get preferences file from url/share and save into 'user' (pillar) home directory.
 
-``eclipse-java.plugins``
+
+``eclipse.plugins``
 ---------------------
-Extend Eclipse with popular plugins sourced via URL and set up and configure via Eclipse IDE API.
+Extend with popular plugins sourced via URL and natively installed via the eclipse IDE API
+
+
+``eclipse.linuxenv``
+------------
+On Linux, the PATH is set for all system users by adding software profile to /etc/profile.d/ directory. Full support for debian alternatives in supported Linux distributions (i.e. not Archlinux).
+
+.. note::
+
+Enable Debian alternatives by setting nonzero 'altpriority' pillar value; otherwise feature is disabled.
+
 
 Please see the pillar.example for configuration.
-Tested on Ubuntu 16.04, Fedora 25
+Tested on Linux (Ubuntu, Fedora, Arch, and Suse), MacOS. Not verified on Windows OS.

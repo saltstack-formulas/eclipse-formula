@@ -1,0 +1,42 @@
+#Default Look Dictionary
+
+eclipse:
+  prefix: /usr/local/eclipse
+  tmpdir: /tmp/eclipse_tmp
+  command: /eclipse
+  homes: /home/
+  os: linux-gtk
+
+  epp:
+    uri: http://eclipse.bluemix.net/packages/
+    home: /opt
+    edition: java
+    release: oxygen
+    version: 1
+
+  dl:
+    archive_type: tar
+    suffix: tar.gz
+    opts: -s -L
+    interval: 15
+    retries: 1
+
+  prefs:
+    user:
+    workspace: /workspace
+    #See https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
+    xmlurl:
+    xmldir:
+    xmlfile: eclipse-settings.xml
+
+  plugins:
+    path: /.metadata/plugins
+    svn:
+      version: 1.9.3
+      prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
+
+  linux:
+    symlink: /usr/bin/eclipse
+    #debian alternatives is disabled by default. Activated via pillar value.
+    altpriority: 0
+
