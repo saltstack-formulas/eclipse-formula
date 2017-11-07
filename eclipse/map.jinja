@@ -1,0 +1,59 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+# Start with defaults from defs.yaml 
+{% import_yaml 'eclipse/defaults.yaml' as defs %}
+
+# Set OS deviations from defaults 
+{% set osmap = salt['grains.filter_by']({
+
+        'MacOS':  { 'prefix'   : '/Applications/Eclipse',
+                    'homes'    : '/Users/',
+                    'os'       : 'macosx-cocoa',
+                    'dl:suffix': 'dmg',
+        },
+        'Windows':{ 'prefix'         : 'C:\\Program files',
+                    'tmpdir'         : 'C:\\temp\\epptmp',
+                    'homes'          : 'C:\\Users\\',
+                    'workspace'      : '\\workspace',
+                    'command'        : '\\eclipse.exe',
+                    'os'             : 'win32',
+                    'dl:suffix'      : 'zip',
+                    'plugins:path'   : '\\.metadata\\.plugins',
+                    'prefs:workspace': '\\workspace',
+        },
+  }, grain='os', merge=salt['grains.filter_by']({
+       'x86_64': {
+          'arch': '-x86_64',
+       },
+}, grain='cpuarch', merge=defs, base="eclipse")) %}
+
+# Merge osmap onto default settings before merging pillars
+{% do defs.eclipse.update(osmap) %}
+{%- set e = salt['pillar.get']('eclipse', default=defs.eclipse, merge=True) %}
+
+# Set directory details
+{%- if grains.os == 'MacOS' %}
+  {%- set _realhome = '{0}.app/Contents/MacOS'.format( e.prefix ) %}
+{% else %}
+  {%- set _realhome = '{0}/eclipse-{1}-{2}-{3}'.format( e.prefix, e.epp.edition, e.epp.release, e.epp.version) %}
+{% endif %}
+
+{% do e.epp.update({'realhome' : _realhome,
+                    'realcmd'  : _realhome ~ e.command,
+                    'workspace': e.homes ~ e.prefs.user ~ e.prefs.workspace,
+                    'metadata' : e.homes ~ e.prefs.user ~ e.prefs.workspace ~ e.plugins.path, })
+%}
+
+# Set release details
+{% set file = 'eclipse-{0}-{1}-{2}-{3}{4}.{5}'.format(e.epp.edition, e.epp.release, e.epp.version, e.os, e.arch, e.dl.suffix) %}
+{% set url  = e.get('epp:uri', '{0}{1}.{2}/data/'.format(e.epp.uri, e.epp.release, e.epp.version)) ~ '/' ~ file %}
+
+{% do e.dl.update({ 'archive_name': file,
+                    'src_url'     : url,
+                    'src_hashurl' : url ~ '.sha512',
+                    'src_hashsum' : salt['cmd.run']('curl -s {0}.sha512'.format( url )).split(' ')[0],
+                    'unpack_opts' : ' -z -C ' ~  e.epp.realhome ~ ' --strip-components=1' })
+%}
+{% set eclipse = e %}
+

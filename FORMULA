@@ -1,0 +1,8 @@
+name: eclipse
+os: RedHat, Debian, Ubuntu, Suse, FreeBSD
+os_family: RedHat, Debian, Suse, FreeBSD
+version: 201710
+release: 1
+minimum_version: 2017.6
+summary: Formula for installing eclipse
+description: Formula for installing packaged versions of eclipse IDE
