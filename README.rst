@@ -2,21 +2,20 @@
 eclipse
 ========
 
-Formula to configure the selected Eclipse release and edition (default java) published by the Eclipse Foundation packaging project (epp), and mirrored by IBM.
+Formula to configure the selected Eclipse release and edition (default java) published by the Eclipse Foundation packaging project (epp), and mirrored by IBM. The table below shows supported eclipse edition codes:
 
-- Editions
-  - java (formula default)
-  - jee
-  - cpp
-  - committers
-  - php
-  - dsl
-  - javascript
-  - modeling
-  - rcp
-  - parallel
-  - testing
-  - scout
+- java (formula default) = Eclipse IDE for Java
+- jee = Eclipse IDE for Java EE
+- cpp = Eclipse IDE for C/C++
+- committers = Eclipse IDE for Eclipse Committers
+- php = Eclipse for PHP
+- dsl = Eclipse for DSL
+- javascript = Eclipse for JavaScript and Web
+- modeling = Eclipse Modelling tools
+- rcp = Eclipse IDE for RCP
+- parallel = Eclipse IDE for Parallel Applications
+- testing = Eclipse for Testers
+- scout = Eclipse for Scout
 
 .. note::
 
