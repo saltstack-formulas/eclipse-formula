@@ -16,8 +16,8 @@ eclipse:
 
   dl:
     archive_type: tar
-    suffix: tar.gz
     opts: -s -L
+    suffix: tar.gz
     interval: 15
     retries: 1
 

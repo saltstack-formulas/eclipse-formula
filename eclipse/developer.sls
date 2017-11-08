@@ -32,11 +32,12 @@ eclipse-desktop-shortcut-add:
     - name: {{ eclipse.homes }}{{ eclipse.prefs.user }}/Desktop/Eclipse.desktop
     - user: {{ eclipse.prefs.user }}
     - makedirs: True
-      {% if grains.os_family in ('Suse',) %} 
+        {% if grains.os_family in ('Suse',) %}
     - group: users
-      {% else %}
+        {% elif grains.os not in ('MacOS',) %}
+        #For MacOS, just inherit group from Darwin
     - group: {{ eclipse.prefs.user }}
-      {% endif %}
+        {% endif %}
     - mode: 644
     - force: True
     - template: jinja
@@ -60,7 +61,7 @@ eclipse-prefs-importfile:
         {% if grains.os_family in ('Suse',) %}
     - group: users
         {% elif grains.os not in ('MacOS',) %}
-        #inherit Darwin ownership
+        #For MacOS, just inherit group from Darwin
     - group: {{ eclipse.prefs.user }}
         {% endif %}
     - if_missing: {{ eclipse.homes }}{{ eclipse.prefs.user }}/{{ eclipse.prefs.xmlfile }}
