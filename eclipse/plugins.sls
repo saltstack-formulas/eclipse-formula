@@ -1,6 +1,6 @@
 {% from "eclipse/map.jinja" import eclipse with context %}
 
-{% if eclipse.prefs.user not in (None, 'undefined', 'undefined_user') %}
+{% if eclipse.prefs.user not in (None, 'undefined', 'undefined_user',) %}
 
 # Install some favourite plugins
 eclipse-extend-with-plugins-config-script:
@@ -11,11 +11,12 @@ eclipse-extend-with-plugins-config-script:
     - makedirs: True
     - mode: 744
     - user: {{ eclipse.prefs.user }}
-  {% if grains.os_family in ('Suse') or grains.os in ('SUSE') %}
+        {% if grains.os_family in ('Suse',) %}
     - group: users
-  {% else %}
+        {% elif grains.os not in ('MacOS',) %}
+        #For MacOS, just inherit group from Darwin
     - group: {{ eclipse.prefs.user }}
-  {% endif %}
+        {% endif %}
     - force: True
     - context:
       home: {{ eclipse.epp.realhome }}
@@ -38,24 +39,25 @@ eclipse-plugin-workspace-plugin-prefs:
     - dir_mode: 755
     - makedirs: True
     - user: {{ eclipse.prefs.user }}
-  {% if grains.os_family in ('Suse') or grains.os in ('SUSE') %}
+        {% if grains.os_family in ('Suse',) %}
     - group: users
-  {% else %}
+        {% elif grains.os not in ('MacOS',) %}
+        #For MacOS, just inherit group from Darwin
     - group: {{ eclipse.prefs.user }}
-  {% endif %}
+        {% endif %}
     - onchanges:
       - eclipse-extend-with-plugins-config-execute
 
 # if some shipped plugins need <user>, assume isimpson is hardcoded
 eclipse-plugin-replace-username-searchtags-workspace:
   cmd.run:
-    - name: grep -rl isimpson {{ eclipse.epp.workspace }} | xargs sed -i "s/isimpson/{{ eclipse.prefs.user }}/g" 2>/dev/null
+    - name: grep -rl isimpson {{ eclipse.epp.workspace }} | xargs sed -i -e "s/isimpson/{{ eclipse.prefs.user }}/g" 2>/dev/null
     - onlyif: test -d {{ eclipse.epp.workspace }}
     - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
 
   {% if eclipse.plugins.svn.version not in (None, 'undefined', '', 0) %}
-    {% if grains.os not in ('Windows', 'MacOS') %}
+    {% if grains.os not in ('Windows', 'MacOS',) %}
      # Only tested on Linux so far
 
 # Setup SVN connector for Eclipse
@@ -71,11 +73,12 @@ eclipse-plugin-svn-connector-dir:
   file.directory:
     - name: {{ eclipse.homes }}{{ eclipse.prefs.user }}/.subversion
     - user: {{ eclipse.prefs.user }}
-  {% if grains.os_family in ('Suse') or grains.os in ('SUSE') %}
+        {% if grains.os_family in ('Suse',) %}
     - group: users
-  {% else %}
+        {% elif grains.os not in ('MacOS',) %}
+        #For MacOS, just inherit group from Darwin
     - group: {{ eclipse.prefs.user }}
-  {% endif %}
+        {% endif %}
     - recurse:
       - user
       - group
