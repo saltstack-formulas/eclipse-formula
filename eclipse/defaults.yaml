@@ -23,6 +23,7 @@ eclipse:
 
   prefs:
     user:
+    group:
     workspace: /workspace
     #See https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
     xmlurl:

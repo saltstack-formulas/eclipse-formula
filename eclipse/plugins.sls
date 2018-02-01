@@ -1,8 +1,10 @@
 {% from "eclipse/map.jinja" import eclipse with context %}
 
-{% if eclipse.prefs.user not in (None, 'undefined', 'undefined_user',) %}
-
 # Install some favourite plugins
+
+{% if eclipse.prefs.user %}
+   {% if grains.os != 'Windows' %}
+
 eclipse-extend-with-plugins-config-script:
   file.managed:
     - name: {{ eclipse.epp.workspace }}/config.sh
@@ -11,12 +13,9 @@ eclipse-extend-with-plugins-config-script:
     - makedirs: True
     - mode: 744
     - user: {{ eclipse.prefs.user }}
-        {% if grains.os_family in ('Suse',) %}
-    - group: users
-        {% elif grains.os not in ('MacOS',) %}
-        #For MacOS, just inherit group from Darwin
-    - group: {{ eclipse.prefs.user }}
-        {% endif %}
+      {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ eclipse.prefs.group }}
+       {% endif %}
     - force: True
     - context:
       home: {{ eclipse.epp.realhome }}
@@ -39,12 +38,9 @@ eclipse-plugin-workspace-plugin-prefs:
     - dir_mode: 755
     - makedirs: True
     - user: {{ eclipse.prefs.user }}
-        {% if grains.os_family in ('Suse',) %}
-    - group: users
-        {% elif grains.os not in ('MacOS',) %}
-        #For MacOS, just inherit group from Darwin
-    - group: {{ eclipse.prefs.user }}
-        {% endif %}
+      {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ eclipse.prefs.group }}
+       {% endif %}
     - onchanges:
       - eclipse-extend-with-plugins-config-execute
 
@@ -56,11 +52,12 @@ eclipse-plugin-replace-username-searchtags-workspace:
     - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
 
-  {% if eclipse.plugins.svn.version not in (None, 'undefined', '', 0) %}
-    {% if grains.os not in ('Windows', 'MacOS',) %}
-     # Only tested on Linux so far
+
+      {% if eclipse.plugins.svn.version not in (None, 'undefined', '', 0) %}
 
 # Setup SVN connector for Eclipse
+# Only tested on Linux so far
+
 eclipse-plugin-svn-connector-config:
   file.append:
     - name: {{ eclipse.epp.metadata }}/{{ eclipse.plugins.svn.prefs_path }}
@@ -68,24 +65,23 @@ eclipse-plugin-svn-connector-config:
     - onlyif: test -f {{ eclipse.epp.metadata }}/{{ eclipse.plugins.svn.prefs_path }}
     - onchanges:
       - eclipse-plugin-workspace-plugin-prefs
+    - unless: test "`uname`" = "Darwin"
 
 eclipse-plugin-svn-connector-dir:
   file.directory:
     - name: {{ eclipse.homes }}{{ eclipse.prefs.user }}/.subversion
     - user: {{ eclipse.prefs.user }}
-        {% if grains.os_family in ('Suse',) %}
-    - group: users
-        {% elif grains.os not in ('MacOS',) %}
-        #For MacOS, just inherit group from Darwin
-    - group: {{ eclipse.prefs.user }}
-        {% endif %}
+      {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
+    - group: {{ eclipse.prefs.group }}
+       {% endif %}
     - recurse:
       - user
       - group
     - onchanges:
       - eclipse-plugin-svn-connector-config
+    - unless: test "`uname`" = "Darwin"
 
-    {% endif %}
+      {% endif %}
+
   {% endif %}
-
 {% endif %}

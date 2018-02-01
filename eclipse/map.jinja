@@ -28,6 +28,12 @@
 {% do defs.eclipse.update(osmap) %}
 {% set ide = salt['pillar.get']( 'eclipse', default=defs.eclipse, merge=True) %}
 
+# Get user's group name from pillar or 'id' command
+{%- if not ide.prefs.group %}
+  {%- set usergroup = salt['cmd.run']('id -gn', runas=ide.prefs.user, output_loglevel='quiet',) or None %}
+  {%- do ide.prefs.update({'group': usergroup,}) %}
+{% endif %}
+
 # Set directory details
 {%- if grains.os == 'MacOS' %}
   {% do ide.dl.update({'suffix': 'dmg'}) %}
