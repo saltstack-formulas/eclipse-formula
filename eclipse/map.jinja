@@ -53,8 +53,8 @@
 %}
 
 # Set release details
-{% set f = 'eclipse-{0}-{1}-{2}-{3}-{4}-{5}'.format(ide.epp.edition, ide.epp.release, ide.epp.version, ide.os, ide.arch, ide.dl.suffix) %}
-{% set url  = ide.get('epp:uri', '{0}{1}/data/'.format(ide.epp.uri, ide.epp.release, ide.epp.version)) ~ '/' ~ f %}
+{% set f = 'eclipse-{0}-{1}-{2}-{3}{4}.{5}'.format(ide.epp.edition, ide.epp.release, ide.epp.version, ide.os, ide.arch, ide.dl.suffix) %}
+{% set url  = ide.get('epp:uri', '{0}{1}/data'.format(ide.epp.uri, ide.epp.release, ide.epp.version)) ~ '/' ~ f %}
 
 {% do ide.dl.update({ 'archive_name': f,
                       'src_url'     : url,
