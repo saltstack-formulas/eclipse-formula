@@ -8,11 +8,11 @@ eclipse:
   os: linux-gtk
 
   epp:
-    uri: http://eclipse.bluemix.net/packages/
+    uri: 'http://eclipse.bluemix.net/packages/'
     home: /opt
     edition: java
-    release: oxygen
-    version: 1
+    release: 2018-09
+    version: False
 
   dl:
     archive_type: tar
