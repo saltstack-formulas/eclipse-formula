@@ -65,8 +65,14 @@ eclipse-prefs-importfile:
     - name: curl -o {{eclipse.homes}}{{eclipse.prefs.user}}/{{eclipse.prefs.xmlfile}} {{eclipse.prefs.xmlurl}}
     - runas: {{ eclipse.prefs.user }}
     - if_missing: {{ eclipse.homes }}{{ eclipse.prefs.user }}/{{ eclipse.prefs.xmlfile }}
+    {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
+    - retry:
+        attempts: 3
+        until: True
+        interval: 60
+        splay: 10
+    {%- endif %}
 
   {% endif %}
-
 {% endif %}
 
