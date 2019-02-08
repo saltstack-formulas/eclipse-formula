@@ -11,7 +11,7 @@ eclipse:
     uri: 'http://eclipse.bluemix.net/packages/'
     home: /opt
     edition: java
-    release: 2018-09
+    release: 2018-12
     version: False
 
   dl:
