@@ -12,7 +12,7 @@ eclipse:
     home: /opt
     edition: java
     release: 2018-12
-    version: False
+    version: R
 
   dl:
     archive_type: tar
