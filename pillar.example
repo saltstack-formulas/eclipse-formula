@@ -3,7 +3,8 @@ eclipse:
     #Default uri is IBM mirror
     #editions: java,jee,cpp,committers,php,dsl,javascript,modeling,rcp,parallel,testing,scout
     edition: java
-    release: 2018-09
+    release: 2018-12
+    version: R
   dl:
     retries: 2
     interval: 30

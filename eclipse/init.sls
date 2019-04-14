@@ -1,23 +1,16 @@
 {% from "eclipse/map.jinja" import eclipse with context %}
 
-# Cleanup first
-eclipse-remove-prev-archive:
-  file.absent:
-    - name: '{{ eclipse.tmpdir }}/{{ eclipse.dl.archive_name }}'
-    - require_in:
-      - eclipse-extract-dirs
-
 eclipse-extract-dirs:
   file.directory:
     - names:
       - '{{ eclipse.tmpdir }}'
       - '{{ eclipse.epp.home }}'
-{% if grains.os not in ('MacOS', 'Windows',) %}
+    {% if grains.os not in ('MacOS', 'Windows',) %}
       - '{{ eclipse.epp.realhome }}'
     - user: root
     - group: root
     - mode: 755
-{% endif %}
+    {% endif %}
     - makedirs: True
     - require_in:
       - eclipse-download-archive
@@ -25,10 +18,13 @@ eclipse-extract-dirs:
 eclipse-download-archive:
   cmd.run:
     - name: curl {{ eclipse.dl.opts }} -o '{{ eclipse.tmpdir }}/{{ eclipse.dl.archive_name }}' {{ eclipse.dl.src_url }}
+    - unless: test -f {{ eclipse.tmpdir }}/{{ eclipse.dl.archive_name }}
       {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
     - retry:
         attempts: {{ eclipse.dl.retries }}
         interval: {{ eclipse.dl.interval }}
+        until: True
+        splay: 10
       {% endif %}
 
 {%- if eclipse.dl.src_hashsum %}
@@ -40,7 +36,7 @@ eclipse-check-archive-hash:
      - name: file.check_hash
      - path: '{{ eclipse.tmpdir }}/{{ eclipse.dl.archive_name }}'
      - file_hash: {{ eclipse.dl.src_hashsum }}
-     - onchanges:
+     - require:
        - cmd: eclipse-download-archive
      - require_in:
        - archive: eclipse-package-install
@@ -75,21 +71,5 @@ eclipse-package-install:
     - source_hash: {{ eclipse.dl.src_hashurl }}
        {%- endif %}
 {% endif %} 
-    - onchanges:
+    - require:
       - cmd: eclipse-download-archive
-    - require_in:
-      - eclipse-remove-archive
-
-eclipse-remove-archive:
-  file.absent:
-    - name: '{{ eclipse.tmpdir }}'
-    - onchanges:
-{%- if grains.os in ('Windows',) %}
-      - pkg: eclipse-package-install
-{%- elif grains.os in ('MacOS',) %}
-      - macpackage: eclipse-package-install
-{% else %}
-      #Unix
-      - archive: eclipse-package-install
-
-{% endif %}
