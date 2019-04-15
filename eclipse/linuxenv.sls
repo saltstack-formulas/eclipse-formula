@@ -32,6 +32,9 @@ eclipse-home-alt-install:
     - link: '{{ eclipse.epp.home }}/{{ eclipse.command }}'
     - path: '{{ eclipse.epp.realhome }}'
     - priority: {{ eclipse.linux.altpriority }}
+    - retry:
+        attempts: 2
+        until: True
 
 eclipse-home-alt-set:
   alternatives.set:
@@ -39,6 +42,9 @@ eclipse-home-alt-set:
     - path: {{ eclipse.epp.realhome }}
     - onchanges:
       - alternatives: eclipse-home-alt-install
+    - retry:
+        attempts: 2
+        until: True
 
 # Add intelli to alternatives system
 eclipse-alt-install:
@@ -50,6 +56,9 @@ eclipse-alt-install:
     - require:
       - alternatives: eclipse-home-alt-install
       - alternatives: eclipse-home-alt-set
+    - retry:
+        attempts: 2
+        until: True
 
 eclipse-alt-set:
   alternatives.set:
@@ -57,6 +66,9 @@ eclipse-alt-set:
     - path: {{ eclipse.epp.realcmd }}
     - onchanges:
       - alternatives: eclipse-alt-install
+    - retry:
+        attempts: 2
+        until: True
 
       {% endif %}
   {% endif %}
