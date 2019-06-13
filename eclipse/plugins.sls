@@ -2,8 +2,8 @@
 
 # Install some favourite plugins
 
-{% if eclipse.prefs.user %}
-   {% if grains.os != 'Windows' %}
+{% if salt['cmd.run']('which java', output_loglevel='quiet') %}
+    {% if eclipse.prefs.user and grains.os != 'Windows' %}
 
 eclipse-extend-with-plugins-config-script:
   file.managed:
@@ -13,7 +13,7 @@ eclipse-extend-with-plugins-config-script:
     - makedirs: True
     - mode: 744
     - user: {{ eclipse.prefs.user }}
-      {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
+       {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
     - group: {{ eclipse.prefs.group }}
        {% endif %}
     - force: True
@@ -38,7 +38,7 @@ eclipse-plugin-workspace-plugin-prefs:
     - dir_mode: 755
     - makedirs: True
     - user: {{ eclipse.prefs.user }}
-      {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
+       {% if eclipse.prefs.group and grains.os not in ('MacOS',) %}
     - group: {{ eclipse.prefs.group }}
        {% endif %}
     - onchanges:
@@ -83,5 +83,14 @@ eclipse-plugin-svn-connector-dir:
 
       {% endif %}
 
-  {% endif %}
+    {% endif %}
+{% else %}
+
+eclipse-no-java-notification:
+  test.show_notification:
+    - text: |
+        Skipping eclipse.plugins state.
+        java command not found.
+        Install java and rerun eclipse.plugins state
+
 {% endif %}
