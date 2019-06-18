@@ -4,7 +4,7 @@
 # Need a java_home
 source /etc/profile
 which java >/dev/null 2>&1
-(( $? != 0 )) && echo "java command not found. Install java and rerun eclipse-java.plugins state" && exit 112
+(( $? != 0 )) && echo "java command not found. Install java and rerun eclipse.plugins state" && exit 112
 
 ### Install popular Eclipse plugins. Should be salt-ized in future ###
 #base
