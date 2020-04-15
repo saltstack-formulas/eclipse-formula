@@ -3,6 +3,6 @@ Encoding=UTF-8
 Name=Eclipse
 Comment=Eclipse for Developers
 Icon={{ home }}/icon.xpm
-Exec={{ home }}/{{ command }}
+Exec={{ home }}/eclipse
 Terminal=false
 Type=Application

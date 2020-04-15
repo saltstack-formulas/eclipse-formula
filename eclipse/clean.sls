@@ -8,11 +8,11 @@
     {%- if grains.kernel|lower in ('linux', 'darwin',) %}
 
 include:
-  - {{ '.macapp' if eclipse.pkg.use_upstream_macapp else '.archive' }}
-  - .config
-  - .developer
-  - .plugins
-  - .linuxenv
+  - {{ '.macapp' if eclipse.pkg.use_upstream_macapp else '.archive' }}.clean
+  - .config.clean
+  - .developer.clean
+  - .plugins.clean
+  - .linuxenv.clean
 
     {%- else %}
 
