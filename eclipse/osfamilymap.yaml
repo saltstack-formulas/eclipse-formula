@@ -39,6 +39,7 @@ MacOS:
   identity:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}
+    user: {{ macos_rootuser | d('') }}
   pkg:
     use_upstream_macapp: true
     use_upstream_archive: false

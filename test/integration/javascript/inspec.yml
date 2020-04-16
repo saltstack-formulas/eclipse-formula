@@ -2,10 +2,10 @@
 # vim: ft=yaml
 ---
 name: default
-title: dbeaver formula
+title: eclipse formula
 maintainer: SaltStack Formulas
 license: Apache-2.0
-summary: Verify that the dbeaver formula is setup and configured correctly
+summary: Verify that the eclipse formula is setup and configured correctly
 supports:
   - platform-name: debian
   - platform-name: ubuntu
