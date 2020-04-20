@@ -22,7 +22,6 @@ Windows:
     tmp: 'C:\\temp\\epptmp'
     workspace: '\\workspace'
     plugins: '\\.metadata\\.plugins'
-  binary: '\\eclipse.exe'
   pkg:
     suffix: zip
     tag: win32
@@ -40,10 +39,10 @@ MacOS:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}
     user: {{ macos_rootuser | d('') }}
+  dir:
+    homes  : '/Users'
   pkg:
     use_upstream_macapp: true
     use_upstream_archive: false
     suffix: dmg
     tag: macosx-cocoa
-    macapp:
-      source_hash:

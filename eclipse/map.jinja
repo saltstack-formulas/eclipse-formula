@@ -32,7 +32,7 @@
 {%- endif %}
 
 {%- if eclipse.pkg.use_upstream_macapp %}
-       {%- do eclipse.pkg.macapp.update({ 'name': '/Applications', 'source': url }) %}
+       {%- do eclipse.pkg.macapp.update({ 'name': '/Applications', 'source': url, 'source_hash': url  ~ '.sha512' }) %}
 {%- endif %}
 
 {% do eclipse.dir.update({ 'workspace': '%s/%s/workspace'|format(eclipse.dir.homes, eclipse.identity.user),

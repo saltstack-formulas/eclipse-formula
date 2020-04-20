@@ -37,11 +37,12 @@ eclipse:
     repo: {}
     suffix: tar.gz
     tag: linux-gtk
-    macapp: {}
+    macapp:
+      source_hash: None  # set by map.jinja
     archive:
       name: None
       uri: http://eclipse.bluemix.net/packages
-      source_hash: https://eclipse.bluemix.net/packages/2020-03/data/eclipse-java-2020-03-R-linux-gtk-x86_64.tar.gz.sha512  # noqa 204
+      source_hash: None  # set by map.jinja
       enforce_toplevel: false
       trim_output: true
       options: '--strip-components=1'

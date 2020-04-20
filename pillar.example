@@ -8,32 +8,24 @@ eclipse:
   edition: java
   release: 2020-03
   version: R
-
-  environ_file: /etc/default/eclipse.sh
-  environ: []
+  environ:
+    a: b
   identity:
     user: undefined_user
   pkg:
-    use_upstream_archive: false
-    use_upstream_macapp: false
     deps:
       - curl
     archive:
       uri: http://eclipse.bluemix.net/packages
-      source_hash: 3e66b14bbeb9ea1ba129fae7c65374844f4ddaf1e48e2bc19b3b2570e158e362
-
   plugins:
     svn:
       version: 1.9.3
       prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
-
   prefs:
-    xmlurl: None
-    xmldir: None
+    xmlurl: None # http://example.com/downloads/eclipse-settings.xml
     xmlfile: eclipse-settings.xml
 
   linux:
-    symlink: /usr/local/bin/eclipse
     # Enable Debian alternatives by setting nonzero value below.
     # Increase value on each subsequent software installation.
     altpriority: 171
