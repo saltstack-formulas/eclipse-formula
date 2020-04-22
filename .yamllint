@@ -13,13 +13,6 @@ ignore: |
   test/**/states/**/*.sls
   .kitchen/
   eclipse/osfamilymap.yaml
-  eclipse/files/configure-plugins.sh
-  eclipse/files/eclipse.sh
-  pillar.example
-  test/salt/java/pillar.sls
-  test/salt/cpp/pillar.sls
-  test/salt/javascript/pillar.sls
-  eclipse/defaults.yaml
 
 yaml-files:
   # Default settings

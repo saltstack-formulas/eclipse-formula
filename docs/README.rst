@@ -1,7 +1,7 @@
 .. _readme:
 
 eclipse-formula
-============
+===============
 
 |img_travis| |img_sr|
 
@@ -36,6 +36,7 @@ The supported versions are:
 - R-incubation
 
 .. contents:: **Table of Contents**
+   :depth: 1
 
 General notes
 -------------

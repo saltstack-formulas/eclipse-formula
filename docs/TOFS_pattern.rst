@@ -261,15 +261,15 @@ To make this work we need a ``conf.sls`` state file that takes a list of possibl
        - require:
          - pkg: Install NTP package
 
-If we want to cover the possibility of a special template for a minion identified by ``eclipse01`` then we could have a specific template in ``/srv/saltstack/salt/ntp/files/eclipse01/etc/ntp.conf.jinja``.
+If we want to cover the possibility of a special template for a minion identified by ``node01`` then we could have a specific template in ``/srv/saltstack/salt/ntp/files/node01/etc/ntp.conf.jinja``.
 
 .. code-block:: jinja
 
-   {#- /srv/saltstack/salt/ntp/files/eclipse01/etc/ntp.conf.jinja #}
+   {#- /srv/saltstack/salt/ntp/files/node01/etc/ntp.conf.jinja #}
    {#- Managed by saltstack #}
    {#- Edit pillars or override this template in saltstack if you need customization #}
 
-   {#- Some crazy configurations here for eclipse01 #}
+   {#- Some crazy configurations here for node01 #}
    {#- ... #}
 
 To make this work we could write a specially crafted ``conf.sls``.
