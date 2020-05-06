@@ -22,7 +22,7 @@ eclipse:
       version: 1.9.3
       prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
   prefs:
-    xmlurl: None # http://example.com/downloads/eclipse-settings.xml
+    xmlurl: null  # http://example.com/downloads/eclipse-settings.xml
     xmlfile: eclipse-settings.xml
 
   linux:
