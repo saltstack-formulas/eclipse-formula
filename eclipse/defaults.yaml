@@ -6,7 +6,7 @@ eclipse:
   version: R    # or R-incubation
   edition: java
 
-  config_file: None
+  config_file: null
   config: {}
   environ_file: /etc/default/eclipse.sh
   environ: []
@@ -27,7 +27,7 @@ eclipse:
 
   pkg:
     name: eclipsejs
-    release: None
+    release: null
     use_upstream_archive: true
     use_upstream_macapp: false
     deps:
@@ -38,11 +38,11 @@ eclipse:
     suffix: tar.gz
     tag: linux-gtk
     macapp:
-      source_hash: None  # set by map.jinja
+      source_hash: null  # set by map.jinja
     archive:
-      name: None
+      name: null
       uri: http://eclipse.bluemix.net/packages
-      source_hash: None  # set by map.jinja
+      source_hash: null  # set by map.jinja
       enforce_toplevel: false
       trim_output: true
       options: '--strip-components=1'
@@ -55,8 +55,8 @@ eclipse:
   prefs:
     # yamllint disable-line rule:line-length
     # https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
-    xmlurl: None
-    xmldir: None
+    xmlurl: null
+    xmldir: null
     xmlfile: eclipse-settings.xml
 
   retry_option:
