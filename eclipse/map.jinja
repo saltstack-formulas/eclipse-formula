@@ -1,67 +1,39 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-# Start with defaults from defs.yaml 
-{% import_yaml 'eclipse/defaults.yaml' as defs %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- import_yaml tplroot ~ "/defaults.yaml" as default_settings %}
+{%- import_yaml tplroot ~ "/osfamilymap.yaml" as osfamilymap %}
+{%- import_yaml tplroot ~ "/osmap.yaml" as osmap %}
+{%- import_yaml tplroot ~ "/osarchmap.yaml" as osarchmap %}
 
-# Set OS deviations from defaults 
-{% set osmap = salt['grains.filter_by']({
+{%- set _config = salt['config.get'](tplroot, default={}) %}
+{%- set defaults = salt['grains.filter_by'](
+      default_settings,
+      default=tplroot,
+      merge=salt['grains.filter_by']( osfamilymap, grain='os_family',
+        merge=salt['grains.filter_by']( osmap, grain='os',
+          merge=salt['grains.filter_by']( osarchmap, grain='osarch',
+            merge=salt['grains.filter_by']( _config, default='lookup'
+            )
+          )
+        )
+      )
+    )
+%}
+{%- set eclipse = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
-        'MacOS':  { 'prefix': '/Applications/Eclipse',
-                    'homes' : '/Users/',
-                    'os'    : 'macosx-cocoa',
-        },
-        'Windows':{ 'prefix'   : 'C:\\Program files',
-                    'tmpdir'   : 'C:\\temp\\epptmp',
-                    'homes'    : 'C:\\Users\\',
-                    'workspace': '\\workspace',
-                    'command'  : '\\eclipse.exe',
-                    'os'       : 'win32',
-        },
-  }, grain='os', merge=salt['grains.filter_by']({
-       'x86_64': {
-          'arch': '-x86_64',
-       },
-}, grain='cpuarch', merge=defs, base="eclipse")) %}
+{%- set url = '%s/%s/data/eclipse-%s-%s-%s-%s-%s.%s'|format( eclipse.pkg.archive.uri, eclipse.release, eclipse.edition, eclipse.release, eclipse.version, eclipse.pkg.tag, eclipse.arch, eclipse.pkg.suffix) %}  # noqa 204
+{%- set dirname = 'eclipse-%s-%s-%s'|format( eclipse.edition, eclipse.release, eclipse.version ) %}
 
-# Merge osmap onto default settings before merging pillars.
-{% do defs.eclipse.update(osmap) %}
-{% set ide = salt['pillar.get']( 'eclipse', default=defs.eclipse, merge=True) %}
-
-# Get user's group name from pillar or 'id' command
-{%- if not ide.prefs.group %}
-  {%- set usergroup = salt['cmd.run']('id -gn', runas=ide.prefs.user, output_loglevel='quiet',) or None %}
-  {%- do ide.prefs.update({'group': usergroup,}) %}
-{% endif %}
-
-# Set directory details
-{%- if grains.os == 'MacOS' %}
-  {% do ide.dl.update({'suffix': 'dmg'}) %}
-  {%- set _realhome = '{0}.app/Contents/MacOS'.format( ide.prefix ) %}
-{% elif grains.os == 'Windows' %}
-  {% do ide.dl.update({'suffix': 'zip'}) %}
-  {% do ide.plugins.update({'path': '\\.metadata\\.plugins' }) %}
-  {% do ide.prefs.update({'workspace': '\\workspace' }) %}
-{% else %}
-  {%- set _realhome = '{0}/eclipse-{1}-{2}-{3}'.format( ide.prefix, ide.epp.edition, ide.epp.release, ide.epp.version) %}
-{% endif %}
-
-{% do ide.epp.update({'realhome' : _realhome,
-                      'realcmd'  : _realhome ~ ide.command,
-                      'workspace': ide.homes ~ ide.prefs.user ~ ide.prefs.workspace,
-                      'metadata' : ide.homes ~ ide.prefs.user ~ ide.prefs.workspace ~ ide.plugins.path, }) %}
-
-{%- if ide.epp.version %}
-   {% set file = 'eclipse-{0}-{1}-{2}-{3}{4}.{5}'.format(ide.epp.edition, ide.epp.release, ide.epp.version, ide.os, ide.arch, ide.dl.suffix) %}
-{%- else %}
-   {% set file = 'eclipse-{0}-{1}-{2}{3}.{4}'.format(ide.epp.edition, ide.epp.release, ide.os, ide.arch, ide.dl.suffix) %}
+{%- if eclipse.pkg.use_upstream_archive %}
+       {%- do eclipse.pkg.archive.update({ 'name': eclipse.dir.archive ~ '/' ~ dirname,
+                                           'source': url, 'source_hash': url ~ '.sha512' }) %}
 {%- endif %}
 
-{% set url  = ide.get('epp:uri', '{0}{1}/data'.format(ide.epp.uri, ide.epp.release, ide.epp.version)) ~ '/' ~ file %}
-{% do ide.dl.update({ 'archive_name': file,
-                      'src_url'     : url,
-                      'src_hashurl' : url ~ '.sha512',
-                      'src_hashsum' : salt['cmd.run']('curl -s {0}.sha512'.format( url )).split(' ')[0],
-                      'unpack_opts' : ' -z -C ' ~  ide.epp.realhome ~ ' --strip-components=1' }) %}
-{% set eclipse = ide %}
+{%- if eclipse.pkg.use_upstream_macapp %}
+       {%- do eclipse.pkg.macapp.update({ 'name': '/Applications', 'source': url, 'source_hash': url  ~ '.sha512' }) %}
+{%- endif %}
 
+{% do eclipse.dir.update({ 'workspace': '%s/%s/workspace'|format(eclipse.dir.homes, eclipse.identity.user),
+      'plugins' : '%s/%s/workspace/%s'|format(eclipse.dir.homes, eclipse.identity.user, eclipse.dir.plugins) }) %}

@@ -1,25 +1,31 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
 eclipse:
-  epp:
-    #Default uri is IBM mirror
-    #editions: java,jee,cpp,committers,php,dsl,javascript,modeling,rcp,parallel,testing,scout
-    edition: java
-    release: 2018-12
-    version: R
-  dl:
-    retries: 2
-    interval: 30
-  prefs:
+  # Default uri is IBM mirror
+  # editions: java,jee,cpp,committers,php,dsl,javascript,
+  #           modeling,rcp,parallel,testing,scout
+  edition: java
+  release: 2020-03
+  version: R
+  environ:
+    a: b
+  identity:
     user: undefined_user
-    #See https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
-    xmlurl:
-    xmldir:
-    xmlfile: eclipse-settings.xml
+  pkg:
+    deps:
+      - curl
+    archive:
+      uri: http://eclipse.bluemix.net/packages
   plugins:
     svn:
       version: 1.9.3
-{% if grains.os not in ('Windows', 'MacOS',)
+      prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
+  prefs:
+    xmlurl: None # http://example.com/downloads/eclipse-settings.xml
+    xmlfile: eclipse-settings.xml
+
   linux:
-    #Enable Debian alternatives feature by setting nonzero 'altpriority' value here.
-    #Increase same value on each subsequent software installation.
+    # Enable Debian alternatives by setting nonzero value below.
+    # Increase value on each subsequent software installation.
     altpriority: 171
-{% endif %}

@@ -1,43 +1,70 @@
-#Default Look Dictionary
-
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
 eclipse:
-  prefix: /usr/local/eclipse
-  tmpdir: /tmp/eclipse_tmp
-  command: /eclipse
-  homes: /home/
-  os: linux-gtk
+  release: 2020-03
+  version: R    # or R-incubation
+  edition: java
 
-  epp:
-    uri: 'http://eclipse.bluemix.net/packages/'
-    home: /opt
-    edition: java
-    release: 2018-12
-    version: R
+  config_file: None
+  config: {}
+  environ_file: /etc/default/eclipse.sh
+  environ: []
 
-  dl:
-    archive_type: tar
-    opts: -s -L
+  kernel: '{{ grains.kernel|lower }}'
+  arch: x64
+
+  identity:
+    rootuser: root
+    rootgroup: root
+    user: undefined_user
+
+  dir:
+    archive: /usr/local
+    homes: /home
+    tmp: /tmp/epp/eclipse
+    plugins: '.metadata/plugins'
+
+  pkg:
+    name: eclipsejs
+    release: None
+    use_upstream_archive: true
+    use_upstream_macapp: false
+    deps:
+      - curl
+      - tar
+      - gzip
+    repo: {}
     suffix: tar.gz
-    interval: 15
-    retries: 1
-
-  prefs:
-    user:
-    group:
-    workspace: /workspace
-    #See https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
-    xmlurl:
-    xmldir:
-    xmlfile: eclipse-settings.xml
+    tag: linux-gtk
+    macapp:
+      source_hash: None  # set by map.jinja
+    archive:
+      name: None
+      uri: http://eclipse.bluemix.net/packages
+      source_hash: None  # set by map.jinja
+      enforce_toplevel: false
+      trim_output: true
+      options: '--strip-components=1'
 
   plugins:
-    path: /.metadata/plugins
     svn:
       version: 1.9.3
       prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
 
-  linux:
-    symlink: /usr/bin/eclipse
-    #debian alternatives is disabled by default. Activated via pillar value.
-    altpriority: 0
+  prefs:
+    # yamllint disable-line rule:line-length
+    # https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
+    xmlurl: None
+    xmldir: None
+    xmlfile: eclipse-settings.xml
 
+  retry_option:
+    # https://docs.saltstack.com/en/latest/ref/states/requisites.html#retrying-states
+    attempts: 2
+    until: true
+    interval: 10
+    splay: 10
+  linux:
+    symlink: /usr/local/bin/eclipse
+    altpriority: 0
