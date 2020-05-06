@@ -31,7 +31,8 @@ eclipse:
         {%- endif %}
     archive:
       uri: http://eclipse.bluemix.net/packages
-      source_hash: https://eclipse.bluemix.net/packages/2020-03/data/eclipse-cpp-2020-03-R-incubation-linux-gtk-x86_64.tar.gz.sha512  # noqa 204
+      # yamllint disable-line rule:line-length
+      source_hash: https://eclipse.bluemix.net/packages/2020-03/data/eclipse-cpp-2020-03-R-incubation-linux-gtk-x86_64.tar.gz.sha512
   linux:
     symlink: /usr/local/bin/eclipse
     altpriority: 171

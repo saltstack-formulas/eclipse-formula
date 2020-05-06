@@ -53,7 +53,8 @@ eclipse:
       prefs_path: /org.eclipse.core.runtime/.settings/org.eclipse.team.svn.ui.prefs
 
   prefs:
-    # https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm # noqa 204
+    # yamllint disable-line rule:line-length
+    # https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.user%2Ftasks%2Ftimpandexp.htm
     xmlurl: None
     xmldir: None
     xmlfile: eclipse-settings.xml
