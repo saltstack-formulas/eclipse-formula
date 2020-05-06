@@ -60,8 +60,10 @@ eclipse-plugins-setup-svn-connector-config:
 
 eclipse-plugin-svn-connector-dir:
   file.directory:
-    - name: {{ eclipse.dir.homes }}{{ eclipse.identity.user }}/.subversion
+    - name: {{ eclipse.dir.homes }}/{{ eclipse.identity.user }}/.subversion
     - user: {{ eclipse.identity.user }}
+    - group: {{ eclipse.identity.rootgroup }}
+    - makedirs: True
     - recurse:
       - user
       - group
