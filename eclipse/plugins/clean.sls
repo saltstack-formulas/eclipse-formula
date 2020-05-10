@@ -8,6 +8,6 @@
 eclipse-plugins-extensions-config-clean:
   file.absent:
     - names:
-      - {{ eclipse.dir.workspace }}/configure-plugins.sh
+      - {{ eclipse.dir.workspace }}/configure-plugins.sh*
       - {{ eclipse.dir.plugins }}/{{ eclipse.plugins.svn.prefs_path }}
       - {{ eclipse.dir.homes }}{{ eclipse.identity.user }}/.subversion

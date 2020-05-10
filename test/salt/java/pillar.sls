@@ -16,7 +16,6 @@ eclipse:
     use_upstream_archive: true
     use_upstream_macapp: false
     deps:
-      - curl
       - tar
       - gzip
         {%- if grains.os_family == 'Debian' %}

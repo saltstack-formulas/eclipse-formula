@@ -7,7 +7,7 @@
 
 eclipse-package-archive-install:
   pkg.installed:
-    - names: {{ eclipse.pkg.deps }}
+    - names: {{ eclipse.pkg.deps|json }}
     - require_in:
       - file: eclipse-package-archive-install
   file.directory:

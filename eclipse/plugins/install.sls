@@ -10,7 +10,7 @@
 eclipse-plugins-extensions-config-install:
   file.managed:
     - name: '{{ eclipse.dir.workspace }}/configure-plugins.sh'
-    - source: salt://eclipse/files/configure-plugins.sh
+    - source: salt://eclipse/files/configure-plugins.shell
     - template: jinja
     - makedirs: True
     - mode: 744
