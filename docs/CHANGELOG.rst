@@ -2,6 +2,24 @@
 Changelog
 =========
 
+`1.1.0 <https://github.com/saltstack-formulas/eclipse-formula/compare/v1.0.0...v1.1.0>`_ (2020-05-26)
+---------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+travis:** adjust matrix to add ``3000.3`` [skip ci] (\ `54c7cb3 <https://github.com/saltstack-formulas/eclipse-formula/commit/54c7cb3a25e96f5dad9854d3c447c54e9cbab59d>`_\ )
+* **linters:** change none to null (\ `4aa1c70 <https://github.com/saltstack-formulas/eclipse-formula/commit/4aa1c7037c3d9355e8c25cde42d094e0bcd09c62>`_\ )
+* **linters:** satisfy yamllint (\ `e604818 <https://github.com/saltstack-formulas/eclipse-formula/commit/e60481803bfea250014b84e03370cde2e81f9229>`_\ )
+* **travis:** add notifications => zulip [skip ci] (\ `5941084 <https://github.com/saltstack-formulas/eclipse-formula/commit/5941084e7df76de9100608f165988059841e3b5d>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **semantic-release:** standardise for this formula (\ `968c1c5 <https://github.com/saltstack-formulas/eclipse-formula/commit/968c1c5e17fe30f257038e64159ccb4c05f6c63c>`_\ )
+
 `1.0.0 <https://github.com/saltstack-formulas/eclipse-formula/compare/v0.4.0...v1.0.0>`_ (2020-05-06)
 ---------------------------------------------------------------------------------------------------------
 
