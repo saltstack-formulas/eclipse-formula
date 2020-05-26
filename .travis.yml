@@ -49,7 +49,6 @@ jobs:
         # Run `shellcheck` (already pre-installed in Travis)
         - shellcheck --version
         - git ls-files -- '*.sh' '*.bash' '*.ksh'
-                        | grep -v 'eclipse/files/'
                         | xargs shellcheck
         # Install and run `commitlint`
         - npm i -D @commitlint/config-conventional
@@ -60,9 +59,10 @@ jobs:
     # Make sure the instances listed below match up with
     # the `platforms` defined in `kitchen.yml`
     - env: INSTANCE=java-debian-10-master-py3
-    - env: INSTANCE=cpp-centos-8-master-py3
-    - env: INSTANCE=java-fedora-31-master-py3
-    - env: INSTANCE=javascript-opensuse-leap-151-master-py3
+    - env: INSTANCE=java-centos-8-master-py3
+    - env: INSTANCE=javascript-fedora-31-master-py3
+    - env: INSTANCE=cpp-opensuse-leap-151-master-py3
+    - env: INSTANCE=java-arch-base-latest-2019-2-py2
 
     ## Define the release stage that runs `semantic-release`
     - stage: 'release'

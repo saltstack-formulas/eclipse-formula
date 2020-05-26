@@ -5,5 +5,5 @@ version: 1.0.0
 release: 1
 minimum_version: 2019.2
 summary: eclipse formula
-description: Formula to install eclipse and configure it.
+description: Formula to install eclipse and configure it
 top_level_dir: eclipse
