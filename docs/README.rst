@@ -74,7 +74,7 @@ Available states
    :local:
 
 ``eclipse``
-^^^^^^^^^
+^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -83,38 +83,38 @@ manages Eclipse configuration file and then
 configures the development environment.
 
 ``eclipse.archive``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will install Eclipse from archive only.
 
 ``eclipse.macapp``
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 This state will install Eclipse from source only.
 
 ``eclipse.config``
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 This state will configure npmrc and/or environment and has a dependency on ``eclipse.install``
 via include list.
 
 ``eclipse.plugins``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 This state will install Eclipse plugins.
 
 ``eclipse.developer``
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 This state will install some Eclipse shortcuts.
 
 ``eclipse.linuxenv``
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 This state will install some Eclipse linux-alternatives on GNU/Linux.
 
 ``eclipse.clean``
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
@@ -123,35 +123,35 @@ removes the configuration file and
 then uninstalls the package.
 
 ``eclipse.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove the configuration of Eclipse and has a
 dependency on ``eclipse.package.clean`` via include list.
 
 ``eclipse.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Eclipse package and has a dependency on
 ``eclipse.config.clean`` via include list.
 
 ``eclipse.macapp.clean``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Eclipse package and has a dependency on
 ``eclipse.config.clean`` via include list.
 
 ``eclipse.plugins.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Eclipse plugins.
 
 ``eclipse.developer.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Eclipse shortcuts.
 
 ``eclipse.linuxenv.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove Eclipse linux-alternatives on GNU/Linux.
 
