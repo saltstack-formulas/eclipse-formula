@@ -60,8 +60,8 @@ jobs:
     # the `platforms` defined in `kitchen.yml`
     - env: INSTANCE=java-debian-10-master-py3
     - env: INSTANCE=java-centos-8-master-py3
-    - env: INSTANCE=javascript-fedora-31-master-py3
-    - env: INSTANCE=cpp-opensuse-leap-151-master-py3
+    - env: INSTANCE=javascript-fedora-32-master-py3
+    - env: INSTANCE=cpp-opensuse-leap-152-master-py3
     - env: INSTANCE=java-arch-base-latest-2019-2-py2
 
     ## Define the release stage that runs `semantic-release`
