@@ -2,6 +2,23 @@
 Changelog
 =========
 
+`1.1.1 <https://github.com/saltstack-formulas/eclipse-formula/compare/v1.1.0...v1.1.1>`_ (2020-09-30)
+---------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen:** use ``saltimages`` Docker Hub where available [skip ci] (\ `ee1e65a <https://github.com/saltstack-formulas/eclipse-formula/commit/ee1e65abc75ba8b9b31ff6784688423231522b47>`_\ )
+* **kitchen+travis:** add new platforms [skip ci] (\ `6e1d386 <https://github.com/saltstack-formulas/eclipse-formula/commit/6e1d38645271becf377852ea9ba8f332c6dd8d60>`_\ )
+
+Styles
+^^^^^^
+
+
+* linting for ``shellcheck`` (\ `371ca46 <https://github.com/saltstack-formulas/eclipse-formula/commit/371ca466ecc4ae47d89f2dc9af6f4bdff67e3682>`_\ )
+* **libtofs.jinja:** use Black-inspired Jinja formatting [skip ci] (\ `aee5be4 <https://github.com/saltstack-formulas/eclipse-formula/commit/aee5be484bc642df38e20a9aa5686988a20ac8f6>`_\ )
+
 `1.1.0 <https://github.com/saltstack-formulas/eclipse-formula/compare/v1.0.0...v1.1.0>`_ (2020-05-26)
 ---------------------------------------------------------------------------------------------------------
 
