@@ -83,6 +83,7 @@ jobs:
     ## Define the rest of the matrix based on Kitchen testing
     # Make sure the instances listed below match up with
     # the `platforms` defined in `kitchen.yml`
+    # - env: INSTANCE=java-debian-11-tiamat-py3
     # - env: INSTANCE=java-debian-10-tiamat-py3
     # - env: INSTANCE=java-debian-9-tiamat-py3
     # - env: INSTANCE=java-ubuntu-2004-tiamat-py3
@@ -94,6 +95,9 @@ jobs:
     # - env: INSTANCE=java-oraclelinux-7-tiamat-py3
     # - env: INSTANCE=java-almalinux-8-tiamat-py3
     # - env: INSTANCE=java-rockylinux-8-tiamat-py3
+    # - env: INSTANCE=java-debian-11-master-py3
+    # - env: INSTANCE=cpp-debian-11-master-py3
+    # - env: INSTANCE=javascript-debian-11-master-py3
     # - env: INSTANCE=java-debian-10-master-py3
     # - env: INSTANCE=cpp-debian-10-master-py3
     # - env: INSTANCE=javascript-debian-10-master-py3
@@ -151,6 +155,7 @@ jobs:
     # - env: INSTANCE=java-rockylinux-8-master-py3
     # - env: INSTANCE=cpp-rockylinux-8-master-py3
     # - env: INSTANCE=javascript-rockylinux-8-master-py3
+    # - env: INSTANCE=java-debian-11-3003-1-py3
     # - env: INSTANCE=java-debian-10-3003-1-py3
     # - env: INSTANCE=java-debian-9-3003-1-py3
     # - env: INSTANCE=java-ubuntu-2004-3003-1-py3
@@ -168,6 +173,7 @@ jobs:
     # - env: INSTANCE=java-arch-base-latest-3003-1-py3
     # - env: INSTANCE=java-gentoo-stage3-latest-3003-1-py3
     # - env: INSTANCE=java-gentoo-stage3-systemd-3003-1-py3
+    # - env: INSTANCE=java-debian-11-3002-6-py3
     # - env: INSTANCE=java-debian-10-3002-6-py3
     # - env: INSTANCE=java-debian-9-3002-6-py3
     # - env: INSTANCE=java-ubuntu-2004-3002-6-py3
