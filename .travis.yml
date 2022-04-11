@@ -116,6 +116,9 @@ jobs:
     # - env: INSTANCE=java-centos-7-master-py3
     # - env: INSTANCE=cpp-centos-7-master-py3
     # - env: INSTANCE=javascript-centos-7-master-py3
+    # - env: INSTANCE=java-fedora-36-master-py3
+    # - env: INSTANCE=cpp-fedora-36-master-py3
+    # - env: INSTANCE=javascript-fedora-36-master-py3
     # - env: INSTANCE=java-fedora-35-master-py3
     # - env: INSTANCE=cpp-fedora-35-master-py3
     # - env: INSTANCE=javascript-fedora-35-master-py3
@@ -159,6 +162,7 @@ jobs:
     # - env: INSTANCE=java-ubuntu-1804-3004-1-py3
     # - env: INSTANCE=java-centos-stream8-3004-1-py3
     # - env: INSTANCE=java-centos-7-3004-1-py3
+    # - env: INSTANCE=java-fedora-36-3004-1-py3
     # - env: INSTANCE=java-fedora-35-3004-1-py3
     # - env: INSTANCE=java-fedora-34-3004-1-py3
     # - env: INSTANCE=java-amazonlinux-2-3004-1-py3
