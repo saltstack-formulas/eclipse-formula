@@ -134,6 +134,7 @@ rubocop:
 # java-debian-11-tiamat-py3: {extends: '.test_instance'}
 # java-debian-10-tiamat-py3: {extends: '.test_instance'}
 # java-debian-9-tiamat-py3: {extends: '.test_instance'}
+# java-ubuntu-2204-tiamat-py3: {extends: '.test_instance_failure_permitted'}
 # java-ubuntu-2004-tiamat-py3: {extends: '.test_instance'}
 # java-ubuntu-1804-tiamat-py3: {extends: '.test_instance'}
 # java-centos-stream8-tiamat-py3: {extends: '.test_instance_failure_permitted'}
@@ -152,6 +153,9 @@ rubocop:
 # java-debian-9-master-py3: {extends: '.test_instance'}
 # cpp-debian-9-master-py3: {extends: '.test_instance'}
 # javascript-debian-9-master-py3: {extends: '.test_instance'}
+# java-ubuntu-2204-master-py3: {extends: '.test_instance_failure_permitted'}
+# cpp-ubuntu-2204-master-py3: {extends: '.test_instance_failure_permitted'}
+# javascript-ubuntu-2204-master-py3: {extends: '.test_instance_failure_permitted'}
 # java-ubuntu-2004-master-py3: {extends: '.test_instance'}
 # cpp-ubuntu-2004-master-py3: {extends: '.test_instance'}
 # javascript-ubuntu-2004-master-py3: {extends: '.test_instance'}
@@ -206,6 +210,7 @@ rubocop:
 # java-debian-11-3004-1-py3: {extends: '.test_instance'}
 # java-debian-10-3004-1-py3: {extends: '.test_instance'}
 # java-debian-9-3004-1-py3: {extends: '.test_instance'}
+# java-ubuntu-2204-3004-1-py3: {extends: '.test_instance_failure_permitted'}
 # java-ubuntu-2004-3004-1-py3: {extends: '.test_instance'}
 # java-ubuntu-1804-3004-1-py3: {extends: '.test_instance'}
 # java-centos-stream8-3004-1-py3: {extends: '.test_instance_failure_permitted'}
