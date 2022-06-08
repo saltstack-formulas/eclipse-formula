@@ -174,9 +174,6 @@ rubocop:
 # java-fedora-35-master-py3: {extends: '.test_instance'}
 # cpp-fedora-35-master-py3: {extends: '.test_instance'}
 # javascript-fedora-35-master-py3: {extends: '.test_instance'}
-# java-fedora-34-master-py3: {extends: '.test_instance'}
-# cpp-fedora-34-master-py3: {extends: '.test_instance'}
-# javascript-fedora-34-master-py3: {extends: '.test_instance'}
 # java-opensuse-leap-153-master-py3: {extends: '.test_instance'}
 # cpp-opensuse-leap-153-master-py3: {extends: '.test_instance'}
 # javascript-opensuse-leap-153-master-py3: {extends: '.test_instance'}
@@ -217,7 +214,6 @@ rubocop:
 # java-centos-7-3004-1-py3: {extends: '.test_instance'}
 # java-fedora-36-3004-1-py3: {extends: '.test_instance_failure_permitted'}
 # java-fedora-35-3004-1-py3: {extends: '.test_instance'}
-# java-fedora-34-3004-1-py3: {extends: '.test_instance'}
 # java-amazonlinux-2-3004-1-py3: {extends: '.test_instance'}
 # java-oraclelinux-8-3004-1-py3: {extends: '.test_instance'}
 # java-oraclelinux-7-3004-1-py3: {extends: '.test_instance'}
@@ -238,14 +234,6 @@ rubocop:
 # java-oraclelinux-8-3003-4-py3: {extends: '.test_instance'}
 # java-oraclelinux-7-3003-4-py3: {extends: '.test_instance'}
 # java-almalinux-8-3003-4-py3: {extends: '.test_instance'}
-# java-debian-10-3002-8-py3: {extends: '.test_instance'}
-# java-debian-9-3002-8-py3: {extends: '.test_instance'}
-# java-ubuntu-2004-3002-8-py3: {extends: '.test_instance'}
-# java-ubuntu-1804-3002-8-py3: {extends: '.test_instance'}
-# java-centos-7-3002-8-py3: {extends: '.test_instance'}
-# java-amazonlinux-2-3002-8-py3: {extends: '.test_instance'}
-# java-oraclelinux-8-3002-8-py3: {extends: '.test_instance'}
-# java-oraclelinux-7-3002-8-py3: {extends: '.test_instance'}
 # yamllint enable rule:line-length
 
 ###############################################################################
